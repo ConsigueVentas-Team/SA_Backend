@@ -1,5 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from datetime import timedelta
@@ -11,7 +12,7 @@ class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     def perform_create(self, serializer):
-        serializer.save(is_superuser=True,is_staff=True)
+        serializer.save(role=1,is_superuser=True,is_staff=True)
 
 # Vista para el login de usuarios
 class UserLoginView(generics.CreateAPIView):
@@ -50,3 +51,16 @@ class UserLoginView(generics.CreateAPIView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+
+    def get_queryset(self):
+        # Retorna el usuario authenticado
+        return User.objects.filter(pk=self.request.user.pk)
+    
+    def get_object(self):
+        # Retorna el objeto del usuario authenticado
+        return self.get_queryset().first()
