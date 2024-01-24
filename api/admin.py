@@ -4,4 +4,4 @@ from api.models import *
 
 admin.site.register(User)
 admin.site.register(Attendance)
-admin.site.register(Shedule)
+admin.site.register(Schedule)
