@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
+    'django_rest_passwordreset' # Para cuando olvidamos la contraseña
+
 ]
 
 MIDDLEWARE = [
@@ -122,7 +125,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+# -----Configuration para enviar emails----
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Backend de correo electronicos que se usara
+EMAIL_PORT = 587  # Puerto para la conexion al servidor de correo electronico
+EMAIL_USE_TLS = True  # Proporciona una capa de seguridad en la conexión con el servidor de correo
+EMAIL_HOST = 'smtp.gmail.com'  #  Utilización del servidor SMTP de Gmail
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  # Usuario de donde se enviaran los correos electronicos
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')  # Llave secreta de google 
 
+APPEND_SLASH=False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 

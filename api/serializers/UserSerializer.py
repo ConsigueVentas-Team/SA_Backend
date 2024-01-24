@@ -8,8 +8,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        return user
-        
+        return user       
 
 # Serializer para el modelo User (para login)
 class UserLoginSerializer(serializers.Serializer):
@@ -25,3 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+# Serializer para cambio de contraseña
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
