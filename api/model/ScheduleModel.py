@@ -1,7 +1,7 @@
 from django.db import models
 from api.model.UserModel import User
 
-class Shedule(models.Model):
+class Schedule(models.Model):
     id = models.AutoField(primary_key=True)
     dayOfWeek = models.IntegerField()
     startTime = models.TimeField()

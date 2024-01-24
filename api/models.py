@@ -5,4 +5,4 @@ from api.model.PositionModel import Position
 from api.model.UserModel import User
 
 from api.model.AttendanceModel import Attendance
-from api.model.SheduleModel import Shedule
+from api.model.ScheduleModel import Schedule
