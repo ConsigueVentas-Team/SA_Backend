@@ -4,3 +4,5 @@ from django.db import models
 from api.model.UserModel import User
 from api.model.AttendanceModel import Attendance
 from api.model.SheduleModel import Shedule
+from api.model.JustificationStatusModel import JustificationStatus
+from api.model.JustificationModel import Justification
