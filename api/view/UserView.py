@@ -1,5 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from datetime import timedelta
@@ -11,7 +12,7 @@ class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     def perform_create(self, serializer):
-        serializer.save(is_superuser=True,is_staff=True)
+        serializer.save(role=1,is_superuser=True,is_staff=True)
 
 # Vista para el login de usuarios
 class UserLoginView(generics.CreateAPIView):
@@ -50,3 +51,43 @@ class UserLoginView(generics.CreateAPIView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+
+    def get_queryset(self):
+        # Retorna el usuario authenticado
+        return User.objects.filter(pk=self.request.user.pk)
+    
+    def get_object(self):
+        # Retorna el objeto del usuario authenticado
+        return self.get_queryset().first()
+
+# Vista para el cambio de contraseña del usuario
+class UserChangePasswordView(generics.UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Obtener el usuario autenticado
+        user = self.request.user
+
+        # Verificar la antigua contraseña
+        if not user.check_password(serializer.validated_data.get('old_password')):
+            return Response({'error': 'La antigua contraseña no es válida.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Verificar que la nueva contraseña no sea igual a la antigua
+        if serializer.validated_data.get('old_password') == serializer.validated_data.get('new_password'):
+            return Response({'error': 'La nueva contraseña debe ser diferente de la antigua'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Cambiar la contraseña
+        user.set_password(serializer.validated_data.get('new_password'))
+        user.save()
+
+        return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
+  
