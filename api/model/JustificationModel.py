@@ -1,5 +1,5 @@
 from django.db import models
-from api.enums.JustificationStatusEnum import JustificationStatus
+from api.enums import JustificationStatus
 from api.model.UserModel import User
 
 class Justification(models.Model):

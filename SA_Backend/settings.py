@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+from decouple import config
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,11 +45,15 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
+    'django_rest_passwordreset' # Para cuando olvidamos la contraseña
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,15 +125,36 @@ USE_L10N = True
 
 USE_TZ = True
 
+# -----Configuration para enviar emails----
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # Backend de correo electronicos que se usara
+EMAIL_PORT = 587  # Puerto para la conexion al servidor de correo electronico
+EMAIL_USE_TLS = True  # Proporciona una capa de seguridad en la conexión con el servidor de correo
+EMAIL_HOST = 'smtp.gmail.com'  #  Utilización del servidor SMTP de Gmail
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  # Usuario de donde se enviaran los correos electronicos
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')  # Llave secreta de google 
 
+APPEND_SLASH=False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'api.User' # Indicamos el modelo de authentication para toda la api
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", #Localhost
+    "http://127.0.0.1:5173", #Localhost
+    "https://"+config('URI_CLIENT') #deployment
+]
+CORS_ALLOW_CREDENTIALS = True
