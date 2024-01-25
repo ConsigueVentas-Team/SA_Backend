@@ -29,7 +29,11 @@ urlpatterns = [
     #---------- Schedules URLs -----------#
     path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
 
+    #---------- NOTIFICATION URLs -----------#
+
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
+
+    #---------- EVALUATION URLs -----------#
 
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
 
