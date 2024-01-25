@@ -25,4 +25,8 @@ urlpatterns = [
 
      # -------- CORE URLs -------------#
     path('core/list',views.CoreListCreateView.as_view(),name="core-list"),
+    
+    #---------- Schedules URLs -----------#
+    path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
+
 ]
