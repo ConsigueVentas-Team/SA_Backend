@@ -4,5 +4,4 @@ from api.models import *
 admin.site.register(Attendance)
 admin.site.register(Shedule)
 admin.site.register(User)
-admin.site.register(JustificationStatus)
 admin.site.register(Justification)
