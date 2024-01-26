@@ -38,15 +38,15 @@ urlpatterns = [
     path('core/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('core/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
     
-    #---------- Schedules URLs -----------#
+    #---------- SCHEDULE URLs -----------#
     path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
 
     #---------- NOTIFICATION URLs -----------#
-
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
 
     #---------- EVALUATION URLs -----------#
-
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
-
+    
+    #---------- ATTENDANCE URLs -----------#
+    path('attendance/list', views.AttendanceList.as_view(), name="evaluation-list"),
 ]
