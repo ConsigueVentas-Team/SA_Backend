@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from api.model.AttendanceModel import Attendance
 from api.model.ScheduleModel import Schedule
 from api.model.JustificationModel import Justification
@@ -10,6 +10,7 @@ from django.core.files.storage import default_storage
 
 class AttendanceList(generics.ListAPIView):
     serializer_class = AttendanceSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         try:
@@ -39,6 +40,7 @@ class AttendanceList(generics.ListAPIView):
 
 class AttendanceByID(generics.ListAPIView):
     serializer_class = AttendanceSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         try:
@@ -52,6 +54,7 @@ class AttendanceByID(generics.ListAPIView):
 class AttendanceCreateAPIView(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
     def is_late_for_check_in(self, admission_time, start_time):
         # Devuelve True si el usuario llegó tarde
