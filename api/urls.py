@@ -3,6 +3,12 @@ from api import views
 
 urlpatterns = [
     #--------- AUTHENTICATIONS URLs ---------#
+    # path('auth/register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
+
+    #--------- JUSTIFICATION URLs ---------#
+    path('justification/list', views.JustificationListCreateView.as_view(), name='get_justification'),
+    path('justification/create', views.JustificationListCreateView.as_view(), name='create_justification'),
+
     path('register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
     path('login',views.UserLoginView.as_view(),name="user_login"),#login
     path('profile',views.UserProfileView.as_view(),name="user_user"),#Datos del usuario authenticado
@@ -31,4 +37,16 @@ urlpatterns = [
     path('core/update/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-update"),
     path('core/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('core/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
+    
+    #---------- Schedules URLs -----------#
+    path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
+
+    #---------- NOTIFICATION URLs -----------#
+
+    path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
+
+    #---------- EVALUATION URLs -----------#
+
+    path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
+
 ]
