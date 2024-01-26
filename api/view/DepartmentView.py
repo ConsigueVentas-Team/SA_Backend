@@ -6,3 +6,10 @@ class DepartmentListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = DepartmentSerializer
     queryset = Department.objects.all()
+
+class DepartmentDetailsUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = DepartmentSerializer
+    queryset = Department.objects.all()
+    lookup_field = 'id'
+

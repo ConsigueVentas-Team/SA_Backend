@@ -17,6 +17,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     image = models.CharField(max_length=150)
     date_start = models.DateField()
     date_end = models.DateField()
+    shift = models.CharField(max_length=15)
 
     position = models.ForeignKey(Position,on_delete=models.CASCADE)
     role = models.IntegerField([e.value,e.name] for e in RoleEnum) # Role
