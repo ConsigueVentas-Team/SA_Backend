@@ -49,7 +49,7 @@ class AttendanceByID(generics.ListAPIView):
             # Manejar cualquier excepción y registrarla si es necesario
             return Response(data={'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class AttendanceListCreateAPIView(generics.ListCreateAPIView):
+class AttendanceCreateAPIView(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     
