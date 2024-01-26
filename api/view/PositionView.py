@@ -6,3 +6,9 @@ class PositionListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PositionSerializer
     queryset = Position.objects.all()
+
+class PositionDetailsUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PositionSerializer
+    queryset = Position.objects.all()
+    lookup_field = 'id'

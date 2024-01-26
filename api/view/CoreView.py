@@ -5,3 +5,10 @@ class CoreListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CoreSerializer
     queryset = Core.objects.all()
+
+
+class CoreDetailsUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CoreSerializer
+    queryset = Core.objects.all()
+    lookup_field = 'id'
