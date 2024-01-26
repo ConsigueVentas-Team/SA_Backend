@@ -39,6 +39,7 @@ urlpatterns = [
     
     #---------- SCHEDULE URLs -----------#
     path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
+    path('schedule/<int:id>',views.ScheduleListByUserView.as_view(),name="schedule-detail"),
 
     #---------- NOTIFICATION URLs -----------#
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),

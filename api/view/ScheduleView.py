@@ -29,3 +29,18 @@ class ScheduleListCreateView(generics.ListCreateAPIView):
             return Response({'message': 'Horarios creados exitosamente.', 'data': request.data}, status=status.HTTP_201_CREATED)
         except Exception as e:
             return Response({'message': f'Error al crear los horarios: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    
+class ScheduleDetailUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+
+class ScheduleListByUserView(generics.ListAPIView):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.kwargs['id']
+        return Schedule.objects.filter(user_id=user_id)
