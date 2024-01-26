@@ -48,5 +48,6 @@ urlpatterns = [
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
     
     #---------- ATTENDANCE URLs -----------#
-    path('attendance/list', views.AttendanceList.as_view(), name="evaluation-list"),
+    path('attendance/list', views.AttendanceList.as_view(), name="attendance-list"),
+    path('attendance/id', views.AttendanceByID.as_view(), name="attendance-id-list"),
 ]
