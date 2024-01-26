@@ -3,6 +3,7 @@ from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin 
 from api.model.PositionModel import Position
 from api.enums import RoleEnum
+
 class User(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
