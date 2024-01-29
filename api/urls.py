@@ -8,6 +8,9 @@ urlpatterns = [
     #--------- JUSTIFICATION URLs ---------#
     path('justification/list', views.JustificationListCreateView.as_view(), name='get_justification'),
     path('justification/create', views.JustificationListCreateView.as_view(), name='create_justification'),
+    path('justification/accept/<int:pk>', views.JustificationRetrieveUpdateView.as_view(), name='accept_justification'),
+    path('justification/decline/<int:pk>', views.JustificationDeclineView.as_view(), name='decline_justification'),
+    path('justification/delete/<int:pk>', views.JustificationDestroyView.as_view(), name='destroy_justification'),
 
     path('register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
     path('login',views.UserLoginView.as_view(),name="user_login"),#login
