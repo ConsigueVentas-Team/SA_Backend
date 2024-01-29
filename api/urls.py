@@ -22,10 +22,34 @@ urlpatterns = [
 
     # -------- POSITION URLs -------------#
     path('position/list',views.PositionListCreateView.as_view(),name="position-list"), 
-    
+    path('position/create',views.PositionListCreateView.as_view(),name="position-create"),
+    path('position/update/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-update"),
+    path('position/delete/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-delete"),
+    path('position/details/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-details"),
+
     # -------- DEPARTMENT URLs -------------#
     path('department/list',views.DepartmentListCreateView.as_view(),name="department-list"),
+    path('department/create',views.DepartmentListCreateView.as_view(),name="department-create"),
+    path('department/update/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-update"),
+    path('department/delete/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-delete"),
+    path('department/details/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-details"),
 
-     # -------- CORE URLs -------------#
+    # -------- CORE URLs -------------#
     path('core/list',views.CoreListCreateView.as_view(),name="core-list"),
+    path('core/create',views.CoreListCreateView.as_view(),name="core-create"),
+    path('core/update/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-update"),
+    path('core/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
+    path('core/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
+    
+    #---------- Schedules URLs -----------#
+    path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
+
+    #---------- NOTIFICATION URLs -----------#
+
+    path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
+
+    #---------- EVALUATION URLs -----------#
+
+    path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
+
 ]
