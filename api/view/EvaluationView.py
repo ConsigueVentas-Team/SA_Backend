@@ -24,7 +24,7 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
               if(serializer.is_valid()):
                 #guardar el user ya que el serializador define que el usuario no cambia
                 serializer.save(user=user)
-                return Response({serializer.data}, status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
               else:
                 return Response({"detail":serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
                
@@ -66,3 +66,4 @@ class EvaluationRetrieveUpdateView(generics.RetrieveUpdateAPIView):
         # Usar el parámetro partial para indicar una actualización parcial
         kwargs['partial'] = True
         return super().update(request)
+
