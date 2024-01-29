@@ -51,5 +51,7 @@ urlpatterns = [
     #---------- EVALUATION URLs -----------#
 
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
+    path('evaluation/create', views.EvaluationListCreateView.as_view(), name="evaluation-create"),
+    path('evaluation/notes/<int:id>', views.EvaluationRetrieveUpdateView.as_view(), name="evaluation-store"),
 
 ]
