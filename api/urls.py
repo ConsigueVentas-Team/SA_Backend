@@ -38,6 +38,7 @@ urlpatterns = [
     path('core/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
     
     #---------- SCHEDULE URLs -----------#
+    path('schedule/list',views.ScheduleListCreateView.as_view(),name="schedule-list"),
     path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
     path('schedule/<int:id>',views.ScheduleListByUserView.as_view(),name="schedule-detail"),
 
