@@ -36,9 +36,9 @@ class UserLoginView(generics.CreateAPIView):
             # get rol
             def getRol(rol):
                 if rol == 1:
-                    return {'id': 1, 'name': 'Geréncia'}
+                    return {'id': 1, 'name': 'Gerencia'}
                 elif rol == 2:
-                    return {'id': 2, 'name': 'Lider Nucleo'}
+                    return {'id': 2, 'name': 'Líder Nucleo'}
                 elif rol == 3:
                     return {'id': 3, 'name': 'Colaborador'}
                 else:
@@ -55,13 +55,13 @@ class UserLoginView(generics.CreateAPIView):
                 'position': user.position.name,
                 'shift': user.shift,
                 'avatar':user.avatar,
-                'role' : getRol(user.role)
             }
 
             return Response({
                 'refresh': str(refresh),
                 'access_token': str(access_token),
                 'user': user_data,
+                'role' : getRol(user.role)
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
