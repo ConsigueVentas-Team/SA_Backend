@@ -25,7 +25,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+class UserDetailsSerializer(serializers.Serializer):   
 
+    class Meta:
+        fields = ['id', 'last_login', 'is_superuser', 'name', 'username', 'surname', 'email', 'status',
+                  'dni', 'cellphone', 'birthday', 'avatar', 'date_start', 'date_end', 'shift', 'role',
+                  'is_active', 'is_staff', 'created_at', 'updated_at', 'position', 'groups', 'user_permissions',
+                  'Asistencia', 'Tardanzas', 'Justificaciones', 'Faltas']
+        
 # Serializer para cambio de contraseña
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True)

@@ -110,11 +110,30 @@ class UserListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
-class UserDetailsView(generics.RetrieveAPIView):
+class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
-    lookup_field = 'id'
+    lookup_field = "id"
+    def list(self, request, *args, **kwargs):
+        print("paso por aqui")
+        user = User.objects.get(pk=kwargs['id'])
+        print(user)
+        attendances = Attendance.objects.filter(user=user.id,attendance=True).count()
+        obcense = Attendance.objects.filter(user=user.id,attendance=False).count()
+        justifications = Attendance.objects.filter(user=user.id,justification=True).count()
+        delays = Attendance.objects.filter(user=user.id,delay=True).count()
+
+        data = {
+            "Asistencia": attendances,
+            "Tardanzas" : delays,
+            "Justificaciones" : justifications,
+            "Faltas" : obcense,
+
+        }
+        # Crear el serializador del usuario calculados
+        serializer = self.get_serializer(user)
+        
+        return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
 
 
 class UserUpdateView(generics.UpdateAPIView):
