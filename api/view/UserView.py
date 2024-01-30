@@ -33,6 +33,17 @@ class UserLoginView(generics.CreateAPIView):
             
             access_token = refresh.access_token
             access_token.set_exp(lifetime=timedelta(days=1))
+            # get rol
+            def getRol(rol):
+                if rol == 1:
+                    return {'id': 1, 'name': 'Geréncia'}
+                elif rol == 2:
+                    return {'id': 2, 'name': 'Lider Nucleo'}
+                elif rol == 3:
+                    return {'id': 3, 'name': 'Colaborador'}
+                else:
+                    return {'id': 0, 'name': 'Rol no válido'}
+
             
             # Obtener los datos del usuario
             user_data = {
@@ -42,6 +53,9 @@ class UserLoginView(generics.CreateAPIView):
                 'surname': user.surname,
                 'email': user.email,
                 'position': user.position.name,
+                'shift': user.shift,
+                'avatar':user.avatar,
+                'role' : getRol(user.role)
             }
 
             return Response({

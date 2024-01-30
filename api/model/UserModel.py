@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin 
 from api.model.PositionModel import Position
-from api.model.RoleModel import Role
+from api.enums import RoleEnum
 
 class User(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
@@ -15,13 +15,13 @@ class User(AbstractBaseUser,PermissionsMixin):
     dni = models.CharField(max_length=10,unique=True)
     cellphone = models.CharField(max_length=15)
     birthday = models.DateField()
-    image = models.CharField(max_length=150)
+    avatar = models.CharField(max_length=4000)
     date_start = models.DateField()
     date_end = models.DateField()
     shift = models.CharField(max_length=15)
 
     position = models.ForeignKey(Position,on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete = models.CASCADE)
+    role = models.IntegerField([e.value,e.name] for e in RoleEnum) # Role
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
