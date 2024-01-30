@@ -122,18 +122,26 @@ class UserDetailsView(generics.ListAPIView):
         obcense = Attendance.objects.filter(user=user.id,attendance=False).count()
         justifications = Attendance.objects.filter(user=user.id,justification=True).count()
         delays = Attendance.objects.filter(user=user.id,delay=True).count()
-
+                    # get rol
+        def getRol(rol):
+                if rol == 1:
+                    return {'id': 1, 'name': 'Gerencia'}
+                elif rol == 2:
+                    return {'id': 2, 'name': 'Líder Nucleo'}
+                elif rol == 3:
+                    return {'id': 3, 'name': 'Colaborador'}
+                else:
+                    return {'id': 0, 'name': 'Rol no válido'}
         data = {
             "Asistencia": attendances,
             "Tardanzas" : delays,
             "Justificaciones" : justifications,
-            "Faltas" : obcense,
-
+            "Faltas" : obcense
         }
         # Crear el serializador del usuario calculados
         serializer = self.get_serializer(user)
         
-        return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
+        return Response({**data,"user":{**serializer.data,"role":getRol(user.role)}}, status.HTTP_200_OK)
 
 
 class UserUpdateView(generics.UpdateAPIView):
