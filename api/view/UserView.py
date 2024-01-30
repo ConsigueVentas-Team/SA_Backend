@@ -4,9 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from datetime import timedelta
+from rest_framework.pagination import PageNumberPagination
+
 from api.models import *
 from api.serializers.UserSerializer import *  
-
+from api.functions.getRol import getRol
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -33,17 +35,6 @@ class UserLoginView(generics.CreateAPIView):
             
             access_token = refresh.access_token
             access_token.set_exp(lifetime=timedelta(days=1))
-            # get rol
-            def getRol(rol):
-                if rol == 1:
-                    return {'id': 1, 'name': 'Gerencia'}
-                elif rol == 2:
-                    return {'id': 2, 'name': 'Líder Nucleo'}
-                elif rol == 3:
-                    return {'id': 3, 'name': 'Colaborador'}
-                else:
-                    return {'id': 0, 'name': 'Rol no válido'}
-
             
             # Obtener los datos del usuario
             user_data = {
@@ -105,43 +96,34 @@ class UserChangePasswordView(generics.UpdateAPIView):
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
 
+
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
+    pagination_class = PageNumberPagination
 
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = "id"
     def list(self, request, *args, **kwargs):
-        print("paso por aqui")
         user = User.objects.get(pk=kwargs['id'])
-        print(user)
         attendances = Attendance.objects.filter(user=user.id,attendance=True).count()
-        obcense = Attendance.objects.filter(user=user.id,attendance=False).count()
+        abcense = Attendance.objects.filter(user=user.id,attendance=False).count()
         justifications = Attendance.objects.filter(user=user.id,justification=True).count()
         delays = Attendance.objects.filter(user=user.id,delay=True).count()
-                    # get rol
-        def getRol(rol):
-                if rol == 1:
-                    return {'id': 1, 'name': 'Gerencia'}
-                elif rol == 2:
-                    return {'id': 2, 'name': 'Líder Nucleo'}
-                elif rol == 3:
-                    return {'id': 3, 'name': 'Colaborador'}
-                else:
-                    return {'id': 0, 'name': 'Rol no válido'}
+
         data = {
             "Asistencia": attendances,
             "Tardanzas" : delays,
             "Justificaciones" : justifications,
-            "Faltas" : obcense
+            "Faltas" : abcense
         }
         # Crear el serializador del usuario calculados
         serializer = self.get_serializer(user)
         
-        return Response({**data,"user":{**serializer.data,"role":getRol(user.role)}}, status.HTTP_200_OK)
+        return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
 
 
 class UserUpdateView(generics.UpdateAPIView):

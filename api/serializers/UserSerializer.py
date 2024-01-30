@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from api.model.UserModel import User
+from api.functions.getRol import getRol
 class UserRegisterSerializer(serializers.ModelSerializer):
     role = serializers.IntegerField(required=False)
     class Meta:
@@ -25,14 +26,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         depth = 3
+    def get_role(self, user):
+        return getRol(user.role)
 
-class UserDetailsSerializer(serializers.Serializer):   
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['role'] = self.get_role(instance)
+        return data
 
-    class Meta:
-        fields = ['id', 'last_login', 'is_superuser', 'name', 'username', 'surname', 'email', 'status',
-                  'dni', 'cellphone', 'birthday', 'avatar', 'date_start', 'date_end', 'shift', 'role',
-                  'is_active', 'is_staff', 'created_at', 'updated_at', 'position', 'groups', 'user_permissions',
-                  'Asistencia', 'Tardanzas', 'Justificaciones', 'Faltas']
         
 # Serializer para cambio de contraseña
 class ChangePasswordSerializer(serializers.Serializer):
