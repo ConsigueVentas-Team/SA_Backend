@@ -17,6 +17,11 @@ urlpatterns = [
     path('login',views.UserLoginView.as_view(),name="user_login"),#login
     path('profile',views.UserProfileView.as_view(),name="user_user"),#Datos del usuario authenticado
     
+    # ------- USERS URLs ----------#
+    path('users/list',views.UserListView.as_view(),name="user_list"),
+    path('users/<int:id>',views.UserDetailsView.as_view(),name="user_details"),
+    path('users/<int:id>/update',views.UserUpdateView.as_view(),name="user_update"),
+
     # ------- PASSWORD RESET URLs ----------#
     path('changepassword',views.UserChangePasswordView.as_view(),name="user_changepassword"),#Cambiar la contraseña
     path('forgotpassword/',include('django_rest_passwordreset.urls'),name="user_forgotpassword"),#Recuperar la contraseña

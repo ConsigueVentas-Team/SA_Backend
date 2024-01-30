@@ -104,4 +104,22 @@ class UserChangePasswordView(generics.UpdateAPIView):
         user.save()
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
-  
+
+class UserListView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+
+class UserDetailsView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    lookup_field = 'id'
+
+
+class UserUpdateView(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    lookup_field = 'id'
+
