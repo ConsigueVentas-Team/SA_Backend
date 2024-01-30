@@ -12,27 +12,35 @@ class ScheduleListCreateView(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         try:
-            user_id = request.data['usuario']
-
-            # Buscar y eliminar el horario si existiera
-            existing_schedule = Schedule.objects.filter(user_id=user_id).first()
-            if existing_schedule:
-                existing_schedule.delete()
-
-            # Obtener el usuario
+            user_id = request.data[0]['usuario']  # Usuario
             user = User.objects.get(pk=user_id)
 
-            # Crear horario
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
+            # Eliminar los horarios existentes para el usuario
+            existing_schedules = Schedule.objects.filter(user_id=user_id)
+            existing_schedules.delete()
 
-            # Asignar la instancia usuario al horario
-            serializer.validated_data['user'] = user
+            # Agregar los horarios
+            for data in request.data:
+                serializer = self.get_serializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.validated_data['user'] = user
+                serializer.save()
 
-            serializer.save()
-
-            return Response(request.data, status=status.HTTP_201_CREATED)
-        except User.DoesNotExist:
-            return Response({'message': 'Usuario no encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'Horarios creados exitosamente.', 'data': request.data}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'message': 'Error al crear el horario.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'message': f'Error al crear los horarios: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    
+class ScheduleDetailUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+
+class ScheduleListByUserView(generics.ListAPIView):
+    queryset = Schedule.objects.all()
+    serializer_class = ScheduleSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.kwargs['id']
+        return Schedule.objects.filter(user_id=user_id)

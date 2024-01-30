@@ -12,6 +12,7 @@ urlpatterns = [
     path('justification/decline/<int:pk>', views.JustificationDeclineView.as_view(), name='decline_justification'),
     path('justification/delete/<int:pk>', views.JustificationDestroyView.as_view(), name='destroy_justification'),
 
+    # ------- AUTHENTICATION URLs ----------#
     path('register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
     path('login',views.UserLoginView.as_view(),name="user_login"),#login
     path('profile',views.UserProfileView.as_view(),name="user_user"),#Datos del usuario authenticado
@@ -19,6 +20,10 @@ urlpatterns = [
     # ------- PASSWORD RESET URLs ----------#
     path('changepassword',views.UserChangePasswordView.as_view(),name="user_changepassword"),#Cambiar la contraseña
     path('forgotpassword/',include('django_rest_passwordreset.urls'),name="user_forgotpassword"),#Recuperar la contraseña
+
+    #--------- JUSTIFICATION URLs ---------#
+    path('justification/list', views.JustificationListCreateView.as_view(), name='get_justification'),
+    path('justification/create', views.JustificationListCreateView.as_view(), name='create_justification'),
 
     # -------- POSITION URLs -------------#
     path('position/list',views.PositionListCreateView.as_view(),name="position-list"), 
@@ -41,17 +46,21 @@ urlpatterns = [
     path('core/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('core/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
     
-    #---------- Schedules URLs -----------#
+    #---------- SCHEDULE URLs -----------#
+    path('schedule/list',views.ScheduleListCreateView.as_view(),name="schedule-list"),
     path('schedule/create', views.ScheduleListCreateView.as_view(), name="schedule-create"),
+    path('schedule/<int:id>',views.ScheduleListByUserView.as_view(),name="schedule-detail"),
 
     #---------- NOTIFICATION URLs -----------#
-
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
 
     #---------- EVALUATION URLs -----------#
-
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
     path('evaluation/create', views.EvaluationListCreateView.as_view(), name="evaluation-create"),
     path('evaluation/notes/<int:id>', views.EvaluationRetrieveUpdateView.as_view(), name="evaluation-store"),
 
+    #---------- ATTENDANCE URLs -----------#
+    path('attendance/list', views.AttendanceList.as_view(), name="attendance-list"),
+    path('attendance/id', views.AttendanceByID.as_view(), name="attendance-id-list"),
+    path('attendance/create', views.AttendanceCreateAPIView.as_view(), name="attendance-create"),
 ]
