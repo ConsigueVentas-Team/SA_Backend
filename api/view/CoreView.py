@@ -1,8 +1,9 @@
 from rest_framework import generics,permissions
+from api.permissions import IsManagement,IsCollaborator
 from api.serializers.CoreSerializer import CoreSerializer
 from api.models import Core
 class CoreListCreateView(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,(IsManagement or IsCollaborator )]
     serializer_class = CoreSerializer
     queryset = Core.objects.all()
 
