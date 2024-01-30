@@ -11,7 +11,7 @@
 
 ## Postman
 Documentación(Users y Auth): https://documenter.getpostman.com/view/32158417/2s9YymH5MX
-
+Documentación(Schedule) https://documenter.getpostman.com/view/23822071/2s9YyqhMG2
 ---
 
 ## Módulos

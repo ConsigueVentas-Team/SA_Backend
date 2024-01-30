@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin 
 from api.model.PositionModel import Position
-from api.enums import RoleEnum
+from api.model.RoleModel import Role
+
 class User(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -20,7 +21,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     shift = models.CharField(max_length=15)
 
     position = models.ForeignKey(Position,on_delete=models.CASCADE)
-    role = models.IntegerField([e.value,e.name] for e in RoleEnum) # Role
+    role = models.ForeignKey(Role, on_delete = models.CASCADE)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
