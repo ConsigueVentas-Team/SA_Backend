@@ -96,12 +96,23 @@ class UserChangePasswordView(generics.UpdateAPIView):
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
 
-
+class CustomPageNumberPagination(PageNumberPagination):
+    def get_paginated_response(self, data):
+        return Response({
+            'count': self.page.paginator.count,
+            'total': self.page.paginator.num_pages,
+            'current_page': self.page.number,
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'last_page': self.get_previous_link(),
+            'results': data
+        })
+    
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
-    pagination_class = PageNumberPagination
+    pagination_class = CustomPageNumberPagination
 
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
@@ -109,22 +120,32 @@ class UserDetailsView(generics.ListAPIView):
     lookup_field = "id"
     def list(self, request, *args, **kwargs):
         user = User.objects.get(pk=kwargs['id'])
-        attendances = Attendance.objects.filter(user=user.id,attendance=True).count()
-        abcense = Attendance.objects.filter(user=user.id,attendance=False).count()
-        justifications = Attendance.objects.filter(user=user.id,justification=True).count()
-        delays = Attendance.objects.filter(user=user.id,delay=True).count()
+        attendances = 0
+        abcenses = 0
+        justifications = 0
+        delays = 0
+
+        attendances_ = Attendance.objects.filter(user=kwargs['id'])
+        for a in attendances_:
+            if a.attendance == True:
+                attendances +=1
+            elif a.justification == True:
+                justifications +=1
+            elif a.delay  == True:
+                delays +=1
+            else:
+                abcenses +=1
 
         data = {
             "Asistencia": attendances,
             "Tardanzas" : delays,
             "Justificaciones" : justifications,
-            "Faltas" : abcense
+            "Faltas" : abcenses
         }
         # Crear el serializador del usuario calculados
         serializer = self.get_serializer(user)
         
         return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
-
 
 class UserUpdateView(generics.UpdateAPIView):
     serializer_class = UserSerializer
@@ -132,3 +153,14 @@ class UserUpdateView(generics.UpdateAPIView):
     queryset = User.objects.all()
     lookup_field = 'id'
 
+
+class UserBirthdayDetailsView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        users = self.get_queryset().filter(is_active=True)
+        serializer = self.get_serializer(users,many=True)
+        
+        return Response(serializer.data)

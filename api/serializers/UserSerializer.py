@@ -39,3 +39,9 @@ class UserSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True)
     new_password = serializers.CharField(write_only=True)
+
+
+class BirthdayDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['birthday']

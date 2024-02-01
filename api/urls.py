@@ -16,15 +16,19 @@ urlpatterns = [
     path('register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
     path('login',views.UserLoginView.as_view(),name="user_login"),#login
     path('profile',views.UserProfileView.as_view(),name="user_user"),#Datos del usuario authenticado
+
+    # ------- PASSWORD RESET URLs ----------#
+    path('changepassword',views.UserChangePasswordView.as_view(),name="user_changepassword"),#Cambiar la contraseña
+    path('forgotpassword/',include('django_rest_passwordreset.urls'),name="user_forgotpassword"),#Recuperar la contraseña
     
     # ------- USERS URLs ----------#
     path('users/list',views.UserListView.as_view(),name="user_list"),
     path('users/<int:id>',views.UserDetailsView.as_view(),name="user_details"),
     path('users/<int:id>/update',views.UserUpdateView.as_view(),name="user_update"),
 
-    # ------- PASSWORD RESET URLs ----------#
-    path('changepassword',views.UserChangePasswordView.as_view(),name="user_changepassword"),#Cambiar la contraseña
-    path('forgotpassword/',include('django_rest_passwordreset.urls'),name="user_forgotpassword"),#Recuperar la contraseña
+    # ------- BIRTHDAYS URLs ----------#
+    path('birthday/details',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
+    path('birthday/nextBirthday',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
 
     #--------- JUSTIFICATION URLs ---------#
     path('justification/list', views.JustificationListCreateView.as_view(), name='get_justification'),
