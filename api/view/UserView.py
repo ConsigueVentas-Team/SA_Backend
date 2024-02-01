@@ -4,8 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from datetime import timedelta
-from rest_framework.pagination import PageNumberPagination
-
+from api.CustomPagination import *
 from api.models import *
 from api.serializers.UserSerializer import *  
 from api.functions.getRol import getRol
@@ -96,19 +95,7 @@ class UserChangePasswordView(generics.UpdateAPIView):
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
 
-class CustomPageNumberPagination(PageNumberPagination):
-    def get_paginated_response(self, data):
-        return Response({
-                    'total': self.page.paginator.count,
-                    'per_page': self.page.paginator.per_page,
-                    'current_page': self.page.number,
-                    'last_page': self.page.paginator.num_pages,
-                    'next_page_url': self.get_next_link(),
-                    'prev_page_url': self.get_previous_link(),
-                    'from': self.page.start_index(),
-                    'to': self.page.end_index(),
-                    'data': data
-                })
+
     
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
