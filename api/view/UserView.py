@@ -95,14 +95,28 @@ class UserChangePasswordView(generics.UpdateAPIView):
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
 
-
     
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
     pagination_class = CustomPageNumberPagination
 
+    def get_queryset(self):
+        queryset = User.objects.all()
+        core = self.request.query_params.get('core', None)
+        department = self.request.query_params.get('department', None)
+        position = self.request.query_params.get('position', None)
+        
+        if core:
+            queryset = queryset.filter(position__core__name=core)
+        if department:
+            queryset = queryset.filter(position__core__department__name=department)
+        if position:
+            queryset = queryset.filter(position__core__department__name=position)
+        return queryset
+
+
+        
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]

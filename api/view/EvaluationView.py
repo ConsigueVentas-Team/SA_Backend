@@ -4,12 +4,14 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from api.model.UserModel import User
 from rest_framework import status
+from api.CustomPagination import *
 
 
 class EvaluationListCreateView(generics.ListCreateAPIView):
   queryset = Evaluation.objects.all()
   serializer_class = EvaluationSerializer
   permission_classes = [permissions.IsAuthenticated]
+  pagination_class = CustomPageNumberPagination
   def create(self, request, *args, **kwargs):
     #solo el manager o el Team_lEader puede crear
     if request.user.role==1 or request.user.role==2:
