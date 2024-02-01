@@ -108,6 +108,13 @@ class UserListView(generics.ListAPIView):
         position = self.request.query_params.get('position', None)
         shift = self.request.query_params.get('shift', None)
 
+        name = self.request.query_params.get('name', None)
+        surname = self.request.query_params.get('surname', None)
+
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+        if surname:
+            queryset = queryset.filter(surname__icontains=surname)
         if core:
             queryset = queryset.filter(position__core__id=core)
         if department:
@@ -116,6 +123,8 @@ class UserListView(generics.ListAPIView):
             queryset = queryset.filter(position=position)
         if shift:
             queryset = queryset.filter(shift=shift)
+
+
         return queryset
 
 
