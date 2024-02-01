@@ -112,7 +112,7 @@ class UserListView(generics.ListAPIView):
         if department:
             queryset = queryset.filter(position__core__department__name=department)
         if position:
-            queryset = queryset.filter(position__core__department__name=position)
+            queryset = queryset.filter(position__name=position)
         return queryset
 
 
