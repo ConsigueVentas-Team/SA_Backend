@@ -99,14 +99,16 @@ class UserChangePasswordView(generics.UpdateAPIView):
 class CustomPageNumberPagination(PageNumberPagination):
     def get_paginated_response(self, data):
         return Response({
-            'count': self.page.paginator.count,
-            'total': self.page.paginator.num_pages,
-            'current_page': self.page.number,
-            'next': self.get_next_link(),
-            'previous': self.get_previous_link(),
-            'last_page': self.get_previous_link(),
-            'results': data
-        })
+                    'total': self.page.paginator.count,
+                    'per_page': self.page.paginator.per_page,
+                    'current_page': self.page.number,
+                    'last_page': self.page.paginator.num_pages,
+                    'next_page_url': self.get_next_link(),
+                    'prev_page_url': self.get_previous_link(),
+                    'from': self.page.start_index(),
+                    'to': self.page.end_index(),
+                    'data': data
+                })
     
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
