@@ -15,7 +15,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     dni = models.CharField(max_length=10,unique=True)
     cellphone = models.CharField(max_length=15)
     birthday = models.DateField()
-    avatar = models.CharField(max_length=4000)
+    avatar = models.ImageField()
     date_start = models.DateField()
     date_end = models.DateField()
     shift = models.CharField(max_length=15)
@@ -29,7 +29,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['name', 'surname','email','dni','position']
+    REQUIRED_FIELDS = ['name', 'surname','email','dni','position','password']
 
     def __str__(self):
         return self.name

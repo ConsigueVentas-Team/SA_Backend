@@ -8,12 +8,31 @@ from api.CustomPagination import *
 from api.models import *
 from api.serializers.UserSerializer import *  
 from api.functions.getRol import getRol
-
+from django.conf import settings
+import os
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
+    def upload_image(self):
+        try:
+            avatar = self.request.data.get('avatar')
+            folder_path = os.path.join(settings.MEDIA_ROOT,'users')
+            os.makedirs(folder_path, exist_ok=True)
+            filename = self.request.data.get('username') + '.' + avatar.name.split('.')[-1] #Username mas la extención del archivo
+            with open(os.path.join(folder_path,filename),'wb') as f:
+                f.write(avatar.read())
+            return f'users/{filename}'
+        except Exception as e:
+            print(e)
+            return Response({"details": f"Error al guardar la imagen: {str(e)}"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
     def perform_create(self, serializer):
-        serializer.save(role=1,is_superuser=True,is_staff=True)
+        serializer.validated_data['avatar'] = self.upload_image()
+        print(self.request.data['position'])
+        position = Position.objects.get(pk=self.request.data['position'])
+        if position:
+            serializer.is_valid(raise_exception=True)
+            serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
 
 # Vista para el login de usuarios
 class UserLoginView(generics.CreateAPIView):
@@ -29,29 +48,18 @@ class UserLoginView(generics.CreateAPIView):
         # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
 
-        if user:
+        if user is not None:
             refresh = RefreshToken.for_user(user)
-            
             access_token = refresh.access_token
             access_token.set_exp(lifetime=timedelta(days=1))
             
-            # Obtener los datos del usuario
-            user_data = {
-                'id': user.id,
-                'username': user.username,
-                'name': user.name,
-                'surname': user.surname,
-                'email': user.email,
-                'position': user.position.name,
-                'shift': user.shift,
-                'avatar':user.avatar,
-            }
-
+            # Serializar los datos del usuario autenticado
+            serializer = UserSerializer(user)
             return Response({
                 'refresh': str(refresh),
                 'access_token': str(access_token),
-                'user': user_data,
-                'role' : getRol(user.role)
+                'user': serializer.data,
+                'role': getRol(user.role)
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
