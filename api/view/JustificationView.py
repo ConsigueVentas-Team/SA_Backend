@@ -24,14 +24,15 @@ class JustificationCreateView(generics.CreateAPIView):
             #nuevo nombre de imagen, formado por la fecha actual y el nombre original
             filename = f'{current_time}-{evidence.name}'
 
-            folder_path = os.path.join(settings.MEDIA_ROOT, current_date)
+            folder = 'justifications'
+            folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
             os.makedirs(folder_path, exist_ok=True)
 
             # guardar imagen en el directorio 'justifications'
             with open(os.path.join(folder_path, filename), 'wb') as f:
                 f.write(evidence.read())
             
-            return f'{current_date}/{filename}'
+            return f'{folder}/{current_date}/{filename}'
        except Exception as e:
           return Response({"details": f"Error al guardar la imagen: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
        
@@ -47,13 +48,14 @@ class JustificationCreateView(generics.CreateAPIView):
 
 # Detallar y aceptar justificaciones
 class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
+    queryset = Justification.objects.all()
     serializer_class = JustificationReviewSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     # Actualizar la justificacion a status == 1 (ACEPTADO)
     def perform_update(self, serializer):
         try:
-            action_by_user_id = self.request.user.id
+            action_by_user_id = self.request.user
             justification_id = self.kwargs['pk']
             justification = Justification.objects.get(id=justification_id)
 
@@ -61,30 +63,29 @@ class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
                 return Response({"details" : "La justificación ya fue declinada y no se puede aceptar"}, status=status.HTTP_406_NOT_ACCEPTABLE)
             
             date = justification.justification_date
-            user = justification.user.id
-            print(date, user)
+            user = justification.user
             # Verificar si ya existe un registro de asistencia
-            # attendance = Attendance.objects.filter(user=user, date=date).first()
-            query = Attendance.filter(user=user, date=date).first()
-            attendance = [query] if query else [] 
-            print(attendance)
+            all_query = Attendance.objects.all()
+            attendance = all_query.filter(user=user, date=date).first()
             if attendance:
                 attendance.attendance = 0 if justification.justification_type == 0 else attendance.attendance
                 attendance.justification = 1
                 attendance.save()
             else:
                 attendance_data = {
-                    "user_id": user,
+                    "user": user,
                     "date": date,
                     "justification": 1
                 }
                 if justification.justification_type == 0:
-                    attendance_data['attendence'] = 0
-                else:
+                    attendance_data['attendance'] = 0
+                elif justification.justification_type == 1:
                     attendance_data['delay'] = 1
+                print("Creando attendance:", attendance_data)
                 Attendance.objects.create(**attendance_data)
-            # print(attendance)
-            serializer.save(justification_status=1, action_by=action_by_user_id)
+            
+                serializer.save(justification_status=1, action_by=action_by_user_id)
+                print("Attendance creado")
             return Response({"details": "Justificación aceptada con éxito"}, status=status.HTTP_200_OK)
         except Attendance.DoesNotExist:
             return Response({"error": "Justificación no encontrada"}, status=status.HTTP_404_NOT_FOUND)
@@ -93,6 +94,7 @@ class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
   
 # Detallar y denegar justificaciones
 class JustificationRetrieveDeclineView(generics.RetrieveUpdateAPIView):
+  queryset = Justification.objects.all()
   serializer_class = JustificationReviewSerializer
   permission_classes = [permissions.IsAuthenticated]
 
@@ -104,10 +106,7 @@ class JustificationRetrieveDeclineView(generics.RetrieveUpdateAPIView):
         if justification.justification_status == 1 or justification.justification_status == 2:
             return Response({"details": "Esta justificación ya ha sido declinada o aceptada"}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            justification.justification_status = 2
-            justification.reason_decline = self.request.reason_decline
-            justification.action_by = self.request.user
-            serializer.save()
+            serializer.save(justification_status=2, action_by = self.request.user)
             return Response({"details" : "La Justificación ha sido rechazada"}, status=status.HTTP_200_OK)
 
     except Exception as e:
