@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api.model.UserModel import User
 from api.functions.getRol import getRol
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     role = serializers.IntegerField(required=False)
@@ -16,11 +17,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     # Especifica los campos requeridos para la autenticación
     username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=False)
     
-
 class UserSerializer(serializers.ModelSerializer):   
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=False)
     # groups = serializers.CharField(write_only=True)
     # user_permissions = serializers.CharField(write_only=True)
     class Meta:
@@ -36,12 +36,10 @@ class UserSerializer(serializers.ModelSerializer):
         data['role'] = self.get_role(instance)
         return data
 
-        
 # Serializer para cambio de contraseña
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(write_only=True)
     new_password = serializers.CharField(write_only=True)
-
 
 class BirthdayDetailsSerializer(serializers.ModelSerializer):
     class Meta:

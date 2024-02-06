@@ -9,7 +9,11 @@ from api.models import *
 from api.serializers.UserSerializer import *  
 from api.functions.getRol import getRol
 from django.conf import settings
+from django.db.models import Q
 import os
+from django.core.files import File
+
+
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
@@ -101,7 +105,6 @@ class UserChangePasswordView(generics.UpdateAPIView):
         user.save()
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
-
     
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
@@ -114,14 +117,10 @@ class UserListView(generics.ListAPIView):
         department = self.request.query_params.get('department', None)
         position = self.request.query_params.get('position', None)
         shift = self.request.query_params.get('shift', None)
-
         name = self.request.query_params.get('name', None)
-        surname = self.request.query_params.get('surname', None)
 
         if name:
-            queryset = queryset.filter(name__icontains=name)
-        if surname:
-            queryset = queryset.filter(surname__icontains=surname)
+            queryset = queryset.filter(Q(name__icontains=name) | Q(surname__icontains=name))
         if core:
             queryset = queryset.filter(position__core__id=core)
         if department:
@@ -130,24 +129,25 @@ class UserListView(generics.ListAPIView):
             queryset = queryset.filter(position=position)
         if shift:
             queryset = queryset.filter(shift=shift)
-
-
         return queryset
-
-
         
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = "id"
+    
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(pk=kwargs['id'])
+        try:
+            user = User.objects.get(pk=kwargs['id'])
+        except User.DoesNotExist:
+            return Response({"message":"El usuario no existe"}, status.HTTP_404_NOT_FOUND)
+        
         attendances = 0
         abcenses = 0
         justifications = 0
         delays = 0
-
         attendances_ = Attendance.objects.filter(user=kwargs['id'])
+        
         for a in attendances_:
             if a.attendance == True:
                 attendances +=1
@@ -166,7 +166,6 @@ class UserDetailsView(generics.ListAPIView):
         }
         # Crear el serializador del usuario calculados
         serializer = self.get_serializer(user)
-        
         return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
 
 class UserUpdateView(generics.UpdateAPIView):
@@ -175,14 +174,34 @@ class UserUpdateView(generics.UpdateAPIView):
     queryset = User.objects.all()
     lookup_field = 'id'
 
-
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()  # Obtener el objeto User a actualizar
+        avatar = request.data.get('avatar')
+        
+        if avatar:  # Si se proporcionó un avatar
+            if isinstance(avatar, File):  # Verificar si es un objeto File
+                # Actualizar el avatar del usuario
+                user.avatar = avatar
+        
+        # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
+        user.save()
+        return Response({"message": "Usuario actualizado correctamente"})
 class UserBirthdayDetailsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    
+    def get_queryset(self):
+        queryset = User.objects.all()
+        mes = self.request.query_params.get('m', None)
+        dia = self.request.query_params.get('d', None)
+
+        if mes:
+            queryset = queryset.filter(birthday__month=int(mes))
+        if dia:
+            queryset = queryset.filter(birthday__day=int(dia))
+        return queryset
 
     def list(self, request, *args, **kwargs):
         users = self.get_queryset().filter(is_active=True)
-        serializer = self.get_serializer(users,many=True)
-        
+        serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
