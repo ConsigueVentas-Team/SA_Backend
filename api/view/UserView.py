@@ -182,7 +182,6 @@ class UserUpdateView(generics.UpdateAPIView):
             if isinstance(avatar, File):  # Verificar si es un objeto File
                 # Actualizar el avatar del usuario
                 user.avatar = avatar
-        
         # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
         user.save()
         return Response({"message": "Usuario actualizado correctamente"})
