@@ -135,12 +135,15 @@ class UserDetailsView(generics.ListAPIView):
     lookup_field = "id"
     
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(pk=kwargs['id'])
+        try:
+            user = User.objects.get(pk=kwargs['id'])
+        except User.DoesNotExist:
+            return Response({"message":"El usuario no existe"}, status.HTTP_404_NOT_FOUND)
+        
         attendances = 0
         abcenses = 0
         justifications = 0
         delays = 0
-
         attendances_ = Attendance.objects.filter(user=kwargs['id'])
         
         for a in attendances_:
