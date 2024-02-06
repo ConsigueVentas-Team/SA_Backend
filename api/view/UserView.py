@@ -11,6 +11,8 @@ from api.functions.getRol import getRol
 from django.conf import settings
 from django.db.models import Q
 import os
+from django.core.files import File
+
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -171,7 +173,19 @@ class UserUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     lookup_field = 'id'
-    
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()  # Obtener el objeto User a actualizar
+        avatar = request.data.get('avatar')
+        
+        if avatar:  # Si se proporcionó un avatar
+            if isinstance(avatar, File):  # Verificar si es un objeto File
+                # Actualizar el avatar del usuario
+                user.avatar = avatar
+        
+        # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
+        user.save()
+        return Response({"message": "Usuario actualizado correctamente"})
 class UserBirthdayDetailsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
