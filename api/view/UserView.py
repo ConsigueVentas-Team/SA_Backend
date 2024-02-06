@@ -132,10 +132,7 @@ class UserListView(generics.ListAPIView):
         if shift:
             queryset = queryset.filter(shift=shift)
 
-
         return queryset
-
-
         
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
