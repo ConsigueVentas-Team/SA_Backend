@@ -17,10 +17,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
     # Especifica los campos requeridos para la autenticación
     username = serializers.CharField()
-    # password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=False)
     
 class UserSerializer(serializers.ModelSerializer):   
-    # password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=False)
     # groups = serializers.CharField(write_only=True)
     # user_permissions = serializers.CharField(write_only=True)
     class Meta:
