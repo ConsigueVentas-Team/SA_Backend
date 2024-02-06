@@ -8,6 +8,7 @@ from api.CustomPagination import *
 from api.models import *
 from api.serializers.UserSerializer import *  
 from api.functions.getRol import getRol
+from django.db.models import Q
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -45,6 +46,7 @@ class UserLoginView(generics.CreateAPIView):
                 'position': user.position.name,
                 'shift': user.shift,
                 'avatar':user.avatar,
+                'password': user.password,
             }
 
             return Response({
@@ -94,7 +96,6 @@ class UserChangePasswordView(generics.UpdateAPIView):
         user.save()
 
         return Response({'message': 'Contraseña cambiada exitosamente.'}, status=status.HTTP_200_OK)
-
     
 class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
@@ -107,14 +108,10 @@ class UserListView(generics.ListAPIView):
         department = self.request.query_params.get('department', None)
         position = self.request.query_params.get('position', None)
         shift = self.request.query_params.get('shift', None)
-
         name = self.request.query_params.get('name', None)
-        surname = self.request.query_params.get('surname', None)
 
         if name:
-            queryset = queryset.filter(name__icontains=name)
-        if surname:
-            queryset = queryset.filter(surname__icontains=surname)
+            queryset = queryset.filter(Q(name__icontains=name) | Q(surname__icontains=name))
         if core:
             queryset = queryset.filter(position__core__id=core)
         if department:
@@ -123,16 +120,13 @@ class UserListView(generics.ListAPIView):
             queryset = queryset.filter(position=position)
         if shift:
             queryset = queryset.filter(shift=shift)
-
-
         return queryset
-
-
         
 class UserDetailsView(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
     lookup_field = "id"
+    
     def list(self, request, *args, **kwargs):
         user = User.objects.get(pk=kwargs['id'])
         attendances = 0
@@ -141,6 +135,7 @@ class UserDetailsView(generics.ListAPIView):
         delays = 0
 
         attendances_ = Attendance.objects.filter(user=kwargs['id'])
+        
         for a in attendances_:
             if a.attendance == True:
                 attendances +=1
@@ -159,7 +154,6 @@ class UserDetailsView(generics.ListAPIView):
         }
         # Crear el serializador del usuario calculados
         serializer = self.get_serializer(user)
-        
         return Response({**data,"user":serializer.data}, status.HTTP_200_OK)
 
 class UserUpdateView(generics.UpdateAPIView):
@@ -167,15 +161,23 @@ class UserUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     lookup_field = 'id'
-
-
+    
 class UserBirthdayDetailsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    
+    def get_queryset(self):
+        queryset = User.objects.all()
+        mes = self.request.query_params.get('m', None)
+        dia = self.request.query_params.get('d', None)
+
+        if mes:
+            queryset = queryset.filter(birthday__month=int(mes))
+        if dia:
+            queryset = queryset.filter(birthday__day=int(dia))
+        return queryset
 
     def list(self, request, *args, **kwargs):
         users = self.get_queryset().filter(is_active=True)
-        serializer = self.get_serializer(users,many=True)
-        
+        serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)

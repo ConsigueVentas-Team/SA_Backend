@@ -6,7 +6,6 @@ from api.model.UserModel import User
 from rest_framework import status
 from api.CustomPagination import *
 
-
 class EvaluationListCreateView(generics.ListCreateAPIView):
   queryset = Evaluation.objects.all()
   serializer_class = EvaluationSerializer
