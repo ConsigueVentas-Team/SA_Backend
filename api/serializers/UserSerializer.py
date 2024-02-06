@@ -3,10 +3,11 @@ from api.model.UserModel import User
 from api.functions.getRol import getRol
 
 class UserRegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
     role = serializers.IntegerField(required=False)
     class Meta:
         model = User
-        fields = '__all__'
+        exclude = ['groups', 'user_permissions']
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -24,7 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
     # user_permissions = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = '__all__'
+        exclude = ['groups', 'user_permissions']
+
         depth = 3
     def get_role(self, user):
         return getRol(user.role)
