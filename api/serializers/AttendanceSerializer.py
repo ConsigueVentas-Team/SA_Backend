@@ -5,3 +5,8 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = '__all__'
+        
+class AttendanceCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = ['admissionImage', 'departureImage', 'user']
