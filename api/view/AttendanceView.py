@@ -7,6 +7,7 @@ from api.serializers.AttendanceSerializer import AttendanceSerializer
 from datetime import datetime, time
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from datetime import datetime, time
 
 class AttendanceList(generics.ListAPIView):
     serializer_class = AttendanceSerializer
@@ -56,11 +57,9 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
     serializer_class = AttendanceSerializer
     permission_classes = [permissions.IsAuthenticated]
     
-    def is_late_for_check_in(self, admission_time, start_time):
-        # Devuelve True si el usuario llegó tarde
-        print("Admission Time:", admission_time)
-        print("Start Time:", start_time)
-        print("Boolean:", admission_time > start_time)
+    def is_late_for_check_in(self, admission_time_str, start_time):
+        # Convertir las cadenas de texto a objetos de tipo datetime.time
+        admission_time = datetime.strptime(admission_time_str, '%H:%M:%S').time()
         return admission_time > start_time
 
     def upload_image(self, image):
@@ -74,11 +73,11 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         except Exception as e:
             raise Exception('Error al subir la imagen.')
 
-    def has_justification(self, user_id):
+    def has_justification(self, user):
         try:
             flag = 2
             today = datetime.now().date()
-            justification_exists = Justification.objects.filter(user=user_id, justification_date=today).first()
+            justification_exists = Justification.objects.filter(user=user, justification_date=today).first()
             if justification_exists is None:
                 return flag
             else:
@@ -113,7 +112,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def update_check_in(self, attendance, current_time, image_path, auth_user_id):
-        try:
+        #try:
             # Formateo para día de la semana
             day_of_week = current_time.weekday()
             
@@ -132,10 +131,11 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 #admission_image = self.upload_image(image_path)
                 
                 admission_image = "image.png"
+                print("Admission Time:",admission_time)
                 
                 # Actualizar los datos de asistencia
-                attendance.admission_time = admission_time
-                attendance.admission_image = admission_image
+                attendance.admissionTime = admission_time
+                attendance.admissionImage = admission_image
                 attendance.user_id = auth_user_id
                 attendance.date = current_time.date()
 
@@ -144,9 +144,8 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 print("Justification:", delay)
                 
                 if delay:
-                    print("Justification")
                     # El usuario llegó tarde, verificamos si tiene justificacion
-                    justification_type = self.has_justification()
+                    justification_type = self.has_justification(auth_user_id)
                     #No tiene justificacion, marcamos tardanza
                     if justification_type == 2:
                         attendance.delay = 1
@@ -160,15 +159,16 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 attendance.save()
             else:
                 raise Exception('No existe un horario para el usuario elegido')
-        except Exception as e:
-            raise Exception('Error al actualizar el check-in.')
+        #except Exception as e:
+        #    raise Exception('Error al actualizar el check-in.')
 
     def update_check_out(self, attendance, current_time, image_path):
         try:
             departure_time = current_time.strftime('%H:%M')
-            departure_image = self.upload_image(image_path)
-            attendance.departure_time = departure_time
-            attendance.departure_image = departure_image
+            #departure_image = self.upload_image(image_path)
+            departure_image = "image.png"
+            attendance.departureTime = departure_time
+            attendance.departureImage = departure_image
             attendance.save()
         except Exception as e:
             raise Exception('Error al actualizar el check-out.')
