@@ -144,8 +144,7 @@ class JustificationListView(views.APIView):
         absence = Justification.objects.filter(justification_type=0).count()
         delay = Justification.objects.filter(justification_type=1).count()
 
-        # Agrega los valores calculados como atributos a la solicitud
-        additional_data = {
+        stats = {
             'rechazados': declines,
             'proceso': process,
             'aceptados': accept,
@@ -160,4 +159,4 @@ class JustificationListView(views.APIView):
         # Serializa los datos paginados
         serializer = JustificationSerializer(paginated_data, many=True)
 
-        return paginated_query.get_paginated_response(serializer.data, additional_data)
+        return paginated_query.get_paginated_response(serializer.data, stats)
