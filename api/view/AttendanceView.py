@@ -58,6 +58,9 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
     
     def is_late_for_check_in(self, admission_time, start_time):
         # Devuelve True si el usuario llegó tarde
+        print("Admission Time:", admission_time)
+        print("Start Time:", start_time)
+        print("Boolean:", admission_time > start_time)
         return admission_time > start_time
 
     def upload_image(self, image):
@@ -75,7 +78,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         try:
             flag = 2
             today = datetime.now().date()
-            justification_exists = Justification.objects.filter(user_id=user_id, justification_date=today).first()
+            justification_exists = Justification.objects.filter(user=user_id, justification_date=today).first()
             if justification_exists is None:
                 return flag
             else:
@@ -113,15 +116,22 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         try:
             # Formateo para día de la semana
             day_of_week = current_time.weekday()
+            
+            print("Auth User:", auth_user_id)
+            print("Day Of week:", day_of_week)
 
             # Obtener el horario personalizado para el usuario logueado
-            schedule_user = Schedule.objects.filter(user_id=auth_user_id, day_of_week=day_of_week).first()
+            schedule_user = Schedule.objects.filter(user=auth_user_id, dayOfWeek=day_of_week).get()
+            
+            print("Schedule:", schedule_user)
             
             #Si exsite el horario, procedemos a marcar la entrada
             if schedule_user:
                 # Asignacion de parametros
-                admission_time = current_time.strftime('%H:%M')
-                admission_image = self.upload_image(image_path)
+                admission_time = current_time.strftime("%H:%M:%S")
+                #admission_image = self.upload_image(image_path)
+                
+                admission_image = "image.png"
                 
                 # Actualizar los datos de asistencia
                 attendance.admission_time = admission_time
@@ -130,7 +140,11 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 attendance.date = current_time.date()
 
                 # Verificar si el usuario llegó tarde según el horario personalizado
-                if self.is_late_for_check_in(admission_time, schedule_user.start_time):
+                delay = self.is_late_for_check_in(admission_time, schedule_user.startTime)
+                print("Justification:", delay)
+                
+                if delay:
+                    print("Justification")
                     # El usuario llegó tarde, verificamos si tiene justificacion
                     justification_type = self.has_justification()
                     #No tiene justificacion, marcamos tardanza
