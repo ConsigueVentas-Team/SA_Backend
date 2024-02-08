@@ -9,6 +9,8 @@ class Justification(models.Model):
   justification_type = models.BooleanField()
   justification_status = models.IntegerField(choices=[(e.value, e.name) for e in JustificationStatus])
   reason_decline = models.TextField(null=True)
+
+  # Relacion de muchos a uno con User
   action_by = models.ForeignKey(User, on_delete = models.SET_NULL, null=True, related_name='action_by_user')
 
   # Relacion de muchos a uno con User
