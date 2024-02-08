@@ -13,7 +13,6 @@ from django.db.models import Q
 import os
 from django.core.files import File
 
-
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
