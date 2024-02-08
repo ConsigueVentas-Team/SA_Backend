@@ -7,10 +7,10 @@ class Schedule(models.Model):
     startTime = models.TimeField()
     endTime = models.TimeField()
     
-    #clave foránea con Usuario
+    #clave foránea con User
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     
-    #auditoría
+    #Datos de auditoría
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

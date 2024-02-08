@@ -2,7 +2,7 @@ from api.model.JustificationModel import Justification
 from api.model.AttendanceModel import Attendance
 from api.serializers.JustificationSerializar import JustificationSerializer, JustificationReviewSerializer
 from api.CustomPagination import CustomPageNumberPagination
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, views, serializers
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 from datetime import datetime
@@ -54,45 +54,15 @@ class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
 
     # Actualizar la justificacion a status == 1 (ACEPTADO)
     def perform_update(self, serializer):
-        try:
-            action_by_user_id = self.request.user
-            justification_id = self.kwargs['pk']
-            justification = Justification.objects.get(id=justification_id)
+        instance = serializer.instance
+        # se verifica si la justificación ha sido declinada
+        if instance.justification_status == 2:
+            raise serializers.ValidationError("La justificación ya fue declinada y no se puede aceptar")
+        else:
+            # si la justificación no ha sido declinada, se acepta
+            serializer.save(justification_status=1, action_by=self.request.user)
 
-            if justification.justification_status == 2:
-                return Response({"details" : "La justificación ya fue declinada y no se puede aceptar"}, status=status.HTTP_406_NOT_ACCEPTABLE)
-            
-            date = justification.justification_date
-            user = justification.user
-            # Verificar si ya existe un registro de asistencia
-            all_query = Attendance.objects.all()
-            attendance = all_query.filter(user=user, date=date).first()
-            if attendance:
-                attendance.attendance = 0 if justification.justification_type == 0 else attendance.attendance
-                attendance.justification = 1
-                attendance.save()
-            else:
-                attendance_data = {
-                    "user": user,
-                    "date": date,
-                    "justification": 1
-                }
-                if justification.justification_type == 0:
-                    attendance_data['attendance'] = 0
-                elif justification.justification_type == 1:
-                    attendance_data['delay'] = 1
-                print("Creando attendance:", attendance_data)
-                Attendance.objects.create(**attendance_data)
-            
-                serializer.save(justification_status=1, action_by=action_by_user_id)
-                print("Attendance creado")
-            return Response({"details": "Justificación aceptada con éxito"}, status=status.HTTP_200_OK)
-        except Attendance.DoesNotExist:
-            return Response({"error": "Justificación no encontrada"}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            return Response({"error": "Error al aceptar la justificación"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-  
-# Detallar y denegar justificaciones
+# Detallar y declinar justificaciones
 class JustificationRetrieveDeclineView(generics.RetrieveUpdateAPIView):
   queryset = Justification.objects.all()
   serializer_class = JustificationReviewSerializer
@@ -100,18 +70,14 @@ class JustificationRetrieveDeclineView(generics.RetrieveUpdateAPIView):
 
   # Actualizar la justificacion a status == 2 (RECHAZADO)
   def perform_update(self, serializer):
-    try:
-        justification_id = self.kwargs['pk']
-        justification = Justification.objects.get(id=justification_id)
+        justification = serializer.instance
+        # se verifica si la justificación ya fue declinada o ha sido aceptada
         if justification.justification_status == 1 or justification.justification_status == 2:
-            return Response({"details": "Esta justificación ya ha sido declinada o aceptada"}, status=status.HTTP_400_BAD_REQUEST)
+            raise serializers.ValidationError("Esta justificación ya fue declinada o aceptada")
         else:
+            # si la justificación no fue declinada o aceptada, se declina
             serializer.save(justification_status=2, action_by = self.request.user)
-            return Response({"details" : "La Justificación ha sido rechazada"}, status=status.HTTP_200_OK)
 
-    except Exception as e:
-      return Response({"details": "Error al declinar la justificación"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
 # Eliminar justificaciones
 class JustificationDestroyView(generics.DestroyAPIView):
   queryset = Justification.objects.all()
@@ -119,46 +85,47 @@ class JustificationDestroyView(generics.DestroyAPIView):
   permission_classes = [permissions.IsAuthenticated]
 
 # Listar justificaciones segun los filtros pasados por parámetro
-class JustificationListView(generics.ListAPIView):
-    serializer_class = JustificationReviewSerializer
+class JustificationListView(views.APIView):
     pagination_class = CustomPageNumberPagination
-    permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        try:
-            query = Justification.objects.all()
-            filters = self.request.query_params
+    def get(self, request, format=None):
+        query = Justification.objects.all()
+        filters = request.query_params
 
-            if 'status' in filters:
-                query = query.filter(justification_status=filters['status'])
-            if 'user' in filters:
-                query = query.filter(user=self.request.user.id)
-            if 'exclude_user' in filters:
-                query = query.exclude(user=self.request.user.id)
-            if 'shift' in filters:
-                query = query.filter(user__shift=filters['shift'])
-            if 'id' in filters:
-                justification = query.filter(pk=filters['id']).first()
-                return [justification] if justification else []
+        if 'status' in filters:
+            query = query.filter(justification_status=filters['status'])
+        if 'user' in filters:
+            query = query.filter(user=request.user.id)
+        if 'exclude_user' in filters:
+            query = query.exclude(user=request.user.id)
+        if 'shift' in filters:
+            query = query.filter(user__shift=filters['shift'])
+        if 'id' in filters:
+            justification = query.filter(pk=filters['id']).first()
+            return Response(JustificationReviewSerializer(justification).data) if justification else Response({'justification': "No se encontró una justificación con el id ingresado"})
+        if 'name' in filters:
+            query = query.filter(user__name__icontains=filters['name']) | query.filter(user__surname__icontains=filters['name'])
 
-            # Filtrar por nombre o apellido si se proporciona
-            if 'name' in filters:
-                query = query.filter(user__name__icontains=filters['name']) | query.filter(user__surname__icontains=filters['name'])
+        query = query.order_by('-created_at')
+        declines = Justification.objects.filter(justification_status=2).count()
+        process = Justification.objects.filter(justification_status=3).count()
+        accept = Justification.objects.filter(justification_status=1).count()
+        absence = Justification.objects.filter(justification_type=0).count()
+        delay = Justification.objects.filter(justification_type=1).count()
 
-            query = query.order_by('-created_at')
-            declines = Justification.objects.filter(justification_status=2).count()
-            process = Justification.objects.filter(justification_status=3).count()
-            accept = Justification.objects.filter(justification_status=1).count()
-            absence = Justification.objects.filter(justification_type=0).count()
-            delay = Justification.objects.filter(justification_type=1).count() 
-            # return {
-            #     'justifications': query,
-            #     'rechazados': declines,
-            #     'proceso': process,
-            #     'aceptados': accept,
-            #     'faltas': absence,
-            #     'delay': delay
-            # }
-            return query
-        except:
-            raise APIException(detail="Error al obtener las justificaciones.")
+        stats = {
+            'rechazados': declines,
+            'proceso': process,
+            'aceptados': accept,
+            'faltas': absence,
+            'delay': delay
+        }
+
+        # Aplica paginación a la consulta
+        paginated_query = self.pagination_class()
+        paginated_data = paginated_query.paginate_queryset(query, request, view=self)
+
+        # Serializa los datos paginados
+        serializer = JustificationSerializer(paginated_data, many=True)
+
+        return paginated_query.get_paginated_response(serializer.data, stats)
