@@ -1,6 +1,6 @@
 from api.model.JustificationModel import Justification
 from api.model.AttendanceModel import Attendance
-from api.serializers.JustificationSerializar import JustificationSerializer, JustificationReviewSerializer
+from api.serializers.JustificationSerializer import JustificationSerializer, JustificationReviewSerializer
 from api.CustomPagination import CustomPageNumberPagination
 from rest_framework import generics, permissions, status, views, serializers
 from rest_framework.response import Response
@@ -126,6 +126,6 @@ class JustificationListView(views.APIView):
         paginated_data = paginated_query.paginate_queryset(query, request, view=self)
 
         # Serializa los datos paginados
-        serializer = JustificationSerializer(paginated_data, many=True)
+        serializer = JustificationReviewSerializer(paginated_data, many=True)
 
         return paginated_query.get_paginated_response(serializer.data, stats)
