@@ -28,7 +28,7 @@ urlpatterns = [
 
     # ------- BIRTHDAYS URLs ----------#
     path('birthday/details',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
-    path('birthday/nextBirthday',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
+    path('birthday/nextBirthday',views.UserNextBirthdayView.as_view(),name="birthday_details"),
 
     # -------- POSITION URLs -------------#
     path('position/list',views.PositionListCreateView.as_view(),name="position-list"), 
