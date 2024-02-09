@@ -60,7 +60,7 @@ class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
             raise serializers.ValidationError("La justificación ya fue declinada y no se puede aceptar")
         else:
             # si la justificación no ha sido declinada, se acepta
-            serializer.save(justification_status=1, action_by=self.request.user)
+            serializer.save(justification_status=1, reason_decline= None, action_by=self.request.user)
 
 # Detallar y declinar justificaciones
 class JustificationRetrieveDeclineView(generics.RetrieveUpdateAPIView):

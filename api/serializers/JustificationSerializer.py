@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api.model.JustificationModel import Justification
 from .UserSerializer import UserSerializer
+from api.serializers.UserSerializer import UserSerializer
 
 class JustificationSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -12,6 +13,7 @@ class JustificationSerializer(serializers.ModelSerializer):
         depth = 4
 
 class JustificationReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
 
     class Meta:
         model = Justification
