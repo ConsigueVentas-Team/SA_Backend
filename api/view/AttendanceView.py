@@ -9,11 +9,13 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from datetime import datetime, time
 from django.conf import settings
+from api.CustomPagination import *
 import os
 
 class AttendanceList(generics.ListAPIView):
     serializer_class = AttendanceSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         try:

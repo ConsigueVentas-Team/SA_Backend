@@ -12,7 +12,7 @@ from django.conf import settings
 from django.db.models import Q
 import os
 from django.core.files import File
-
+from datetime import datetime
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -185,6 +185,7 @@ class UserUpdateView(generics.UpdateAPIView):
         # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
         user.save()
         return Response({"message": "Usuario actualizado correctamente"})
+    
 class UserBirthdayDetailsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
@@ -204,3 +205,30 @@ class UserBirthdayDetailsView(generics.ListAPIView):
         users = self.get_queryset().filter(is_active=True)
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)
+    
+class UserNextBirthdayView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        queryset = User.objects.filter(is_active=True)
+        mes = self.request.query_params.get('m')
+        dia = self.request.query_params.get('d')
+
+        if mes:
+            queryset = queryset.filter(birthday__month=int(mes))
+
+        if dia:
+            # Filtra los cumpleaños que son mayores que el día actual
+            current_date = datetime.now().date()
+            queryset = queryset.filter(birthday__day__gte=int(dia), birthday__month__gte=current_date.month)
+
+        # Ordena los resultados por fecha de cumpleaños en orden ascendente
+        queryset = queryset.order_by('birthday__month', 'birthday__day')
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        users = self.get_queryset()
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data)
+

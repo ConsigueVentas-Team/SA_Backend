@@ -6,7 +6,7 @@ urlpatterns = [
     # path('auth/register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
 
     #--------- JUSTIFICATION URLs ---------#
-    path('justification/list/', views.JustificationListView.as_view(), name='get_justification'), 
+    path('justification/list', views.JustificationListView.as_view(), name='get_justification'), 
     path('justification/create', views.JustificationCreateView.as_view(), name='create_justification'),
     path('justification/accept/<int:pk>', views.JustificationRetrieveAcceptView.as_view(), name='accept_justification'),
     path('justification/decline/<int:pk>', views.JustificationRetrieveDeclineView.as_view(), name='decline_justification'),
@@ -28,7 +28,7 @@ urlpatterns = [
 
     # ------- BIRTHDAYS URLs ----------#
     path('birthday/details',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
-    path('birthday/nextBirthday',views.UserBirthdayDetailsView.as_view(),name="birthday_details"),
+    path('birthday/nextBirthday',views.UserNextBirthdayView.as_view(),name="birthday_details"),
 
     # -------- POSITION URLs -------------#
     path('position/list',views.PositionListCreateView.as_view(),name="position-list"), 
