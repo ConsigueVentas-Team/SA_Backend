@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from api.model.JustificationModel import Justification
+from api.serializers.UserSerializer import UserSerializer
 
 class JustificationSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.id')
@@ -10,6 +11,7 @@ class JustificationSerializer(serializers.ModelSerializer):
         exclude = ['reason_decline', 'action_by']
 
 class JustificationReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
 
     class Meta:
         model = Justification
