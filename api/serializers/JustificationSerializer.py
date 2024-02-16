@@ -13,7 +13,7 @@ class JustificationSerializer(serializers.ModelSerializer):
         depth = 4
 
 class JustificationReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(required=False)
 
     class Meta:
         model = Justification
