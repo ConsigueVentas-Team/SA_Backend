@@ -4,7 +4,7 @@ from .UserSerializer import UserSerializer
 from api.serializers.UserSerializer import UserSerializer
 
 class JustificationSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(required=False)
     justification_status = serializers.ReadOnlyField()
 
     class Meta():
@@ -13,7 +13,7 @@ class JustificationSerializer(serializers.ModelSerializer):
         depth = 4
 
 class JustificationReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer(required=False)
+    user = UserSerializer()
 
     class Meta:
         model = Justification
