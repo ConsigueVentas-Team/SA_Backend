@@ -20,9 +20,13 @@ class JustificationCreateView(generics.CreateAPIView):
             evidence = self.request.data.get('evidence')
             current_date = datetime.now().strftime('%Y-%m-%d')
             current_time = datetime.now().time().strftime('%H%M%S')
+            filename, ext = os.path.splitext(evidence.name)
 
-            #nuevo nombre de imagen, formado por la fecha actual y el nombre original
-            filename = f'{current_time}-{evidence.name}'
+            # separa la primera parte del nombre del archivo hasta el primer espacio
+            new_file_name = filename.split(" ", 1)[0]
+
+            #nuevo nombre de imagen, formado por la fecha actual y el nuevo nombre del archivo mas su extension
+            filename = f'{current_time}-{new_file_name}{ext}'
 
             folder = 'justifications'
             folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
