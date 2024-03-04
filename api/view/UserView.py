@@ -12,7 +12,8 @@ from django.conf import settings
 from django.db.models import Q
 import os
 from django.core.files import File
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -176,15 +177,52 @@ class UserUpdateView(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         user = self.get_object()  # Obtener el objeto User a actualizar
-        avatar = request.data.get('avatar')
+        data = request.data
+
+        # Obtener el avatar del diccionario de datos
+        avatar = data.get('avatar')
+        def getStatus():
+            return data.get("status")=="true"
         
-        if avatar:  # Si se proporcionó un avatar
+        # Crear un diccionario con los datos que quieres actualizar
+        newData = {
+            "name": data.get('name'),
+            "surname": data.get('surname'),
+            "dni": data.get('dni'),
+            "username": data.get('dni'),
+            "email": data.get('email'),
+            "cellphone": data.get('cellphone'),
+            "date_start": data.get('date_start'),
+            "date_end": data.get('date_end'),
+            "status": getStatus(),
+            "status_description": data.get('status_description'),
+            "position_id": data.get('position_id'),
+            "role": data.get('role'),
+            "shift": data.get('shift'),
+            # Incluye aquí otros campos que quieras actualizar
+        }
+
+        # Guardar el avatar si se proporciona
+        if avatar:
             if isinstance(avatar, File):  # Verificar si es un objeto File
-                # Actualizar el avatar del usuario
-                user.avatar = avatar
-        # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
+                # Eliminar el avatar anterior
+                if user.avatar:
+                    avatar_path = user.avatar.path
+                    if default_storage.exists(avatar_path):
+                        default_storage.delete(avatar_path)
+                
+                # Asignar el nuevo avatar al usuario
+                user.avatar.save(avatar.name, ContentFile(avatar.read()))
+
+        # Actualizar los campos del usuario
+        for key, value in newData.items():
+            setattr(user, key, value)
+
+        # Guardar los cambios en el usuario
         user.save()
+
         return Response({"message": "Usuario actualizado correctamente"})
+    
 class UserBirthdayDetailsView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
