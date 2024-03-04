@@ -11,7 +11,7 @@ def avatar_path(instance, filename):
     # Obtén la extensión del archivo
     _, ext = os.path.splitext(filename)
     # Construye el nombre del archivo de avatar usando el nombre de usuario y la extensión
-    return os.path.join('users', f'{dni}{ext}')
+    return os.path.join('photos', f'{dni}{ext}')
 
 class User(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)

@@ -1,15 +1,18 @@
 from rest_framework import generics,permissions
 from api.permissions import IsManagement,IsCollaborator
-from api.serializers.CoreSerializer import CoreSerializer
+from api.serializers.CoreSerializer import *
 from api.models import Core
 from api.CustomPagination import *
 
-class CoreListCreateView(generics.ListCreateAPIView):
+class CoreListView(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated,(IsManagement or IsCollaborator )]
-    serializer_class = CoreSerializer
+    serializer_class = CoreSerializerList
     queryset = Core.objects.all()
     pagination_class = CustomPageNumberPagination
 
+class CoreCreateView(generics.CreateAPIView):
+    serializer_class = CoreSerializer
+    queryset = Core.objects.all()
 
 class CoreDetailsUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [permissions.IsAuthenticated]

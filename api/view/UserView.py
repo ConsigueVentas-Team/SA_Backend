@@ -14,6 +14,7 @@ import os
 from django.core.files import File
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.contrib.auth.hashers import make_password
 
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
@@ -21,12 +22,12 @@ class UserRegisterView(generics.CreateAPIView):
     def upload_image(self):
         try:
             avatar = self.request.data.get('avatar')
-            folder_path = os.path.join(settings.MEDIA_ROOT,'users')
+            folder_path = os.path.join(settings.MEDIA_ROOT,'photos')
             os.makedirs(folder_path, exist_ok=True)
             filename = self.request.data.get('username') + '.' + avatar.name.split('.')[-1] #Username mas la extención del archivo
             with open(os.path.join(folder_path,filename),'wb') as f:
                 f.write(avatar.read())
-            return f'users/{filename}'
+            return f'photos/{filename}'
         except Exception as e:
             print(e)
             return Response({"details": f"Error al guardar la imagen: {str(e)}"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -51,7 +52,6 @@ class UserLoginView(generics.CreateAPIView):
 
         # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             refresh = RefreshToken.for_user(user)
             access_token = refresh.access_token
@@ -65,6 +65,8 @@ class UserLoginView(generics.CreateAPIView):
                 'user': serializer.data,
                 'role': getRol(user.role)
             }, status=status.HTTP_200_OK)
+        elif user.status==False: return Response({'error': 'Tu cuenta ha sido bloqueado, contacte a un administrador'}, status=status.HTTP_401_UNAUTHORIZED) 
+        
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
@@ -199,9 +201,9 @@ class UserUpdateView(generics.UpdateAPIView):
             "position_id": data.get('position_id'),
             "role": data.get('role'),
             "shift": data.get('shift'),
+            "password": make_password(data.get('dni')),
             # Incluye aquí otros campos que quieras actualizar
         }
-
         # Guardar el avatar si se proporciona
         if avatar:
             if isinstance(avatar, File):  # Verificar si es un objeto File
