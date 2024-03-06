@@ -77,7 +77,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
             os.makedirs(folder_path, exist_ok=True)
 
-            # guardar imagen en el directorio 'justifications'
+            # guardar imagen en el directorio 'anttendances'
             with open(os.path.join(folder_path, filename), 'wb') as f:
                 f.write(evidence.read())
             

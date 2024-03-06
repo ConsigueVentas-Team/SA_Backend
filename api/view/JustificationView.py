@@ -81,7 +81,6 @@ class JustificationRetrieveAcceptView(generics.RetrieveUpdateAPIView):
                     attendance_data['attendance'] = 0
                 elif justification.justification_type == 1:
                     attendance_data['delay'] = 1
-                print("Creando attendance:", attendance_data)
                 Attendance.objects.create(**attendance_data)
             
                 serializer.save(justification_status=1, action_by=action_by_user_id)
@@ -128,7 +127,6 @@ class JustificationListView(generics.ListAPIView):
         try:
             query = Justification.objects.all()
             filters = self.request.query_params
-
             if 'status' in filters:
                 query = query.filter(justification_status=filters['status'])
             if 'user' in filters:
