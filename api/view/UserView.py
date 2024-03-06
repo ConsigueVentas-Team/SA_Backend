@@ -29,7 +29,6 @@ class UserRegisterView(generics.CreateAPIView):
                 f.write(avatar.read())
             return f'photos/{filename}'
         except Exception as e:
-            print(e)
             return Response({"details": f"Error al guardar la imagen: {str(e)}"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def perform_create(self, serializer):
