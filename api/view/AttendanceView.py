@@ -100,6 +100,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             raise Exception('Error al verificar la justificación.')
 
     def post(self, request, *args, **kwargs):
+        print(self.request.data)
         try:
             #Asignacion de datos
             auth_user_id = request.user.id
