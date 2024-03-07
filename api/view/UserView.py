@@ -37,6 +37,9 @@ class UserRegisterView(generics.CreateAPIView):
         position = Position.objects.get(pk=self.request.data['position'])
         if position:
             serializer.is_valid(raise_exception=True)
+            #Descomentar esta línea en producción
+            # user = serializer.save(is_active=True,status=True,role=3,is_staff=False,is_superuser=False,position=position)
+            #Descomentar esta línea en desarrollo
             user = serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
             #Creamos los horarios segun el shift
             if self.request.data['shift']=="Mañana":
