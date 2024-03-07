@@ -18,12 +18,13 @@ class EvaluationSerializer(serializers.ModelSerializer):
         softskills = data.softskills
         performance = data.performance
         return round((hardskills + softskills + performance) / 3, 2)
-
-    
-    
-    
-
   class Meta:
     model = Evaluation
     fields = '__all__'
     extra_fields = ['promedio']
+
+
+class EvaluationPatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evaluation
+        fields = ['softskills', 'performance', 'hardskills', 'autoevaluation']

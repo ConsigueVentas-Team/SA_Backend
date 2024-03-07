@@ -68,4 +68,7 @@ urlpatterns = [
     path('attendance/list', views.AttendanceList.as_view(), name="attendance-list"),
     path('attendance/id', views.AttendanceByID.as_view(), name="attendance-id-list"),
     path('attendance/create', views.AttendanceCreateAPIView.as_view(), name="attendance-create"),
+    
+    #---------- REPORTS URLs -----------#
+    path('reports/list', views.ReportListAPIView.as_view(), name='get_reports'),
 ]

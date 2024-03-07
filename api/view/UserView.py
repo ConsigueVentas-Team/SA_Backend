@@ -15,7 +15,8 @@ from django.core.files import File
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.contrib.auth.hashers import make_password
-
+from rest_framework.exceptions import NotFound
+from api.functions.createSchedule import *
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
@@ -36,7 +37,14 @@ class UserRegisterView(generics.CreateAPIView):
         position = Position.objects.get(pk=self.request.data['position'])
         if position:
             serializer.is_valid(raise_exception=True)
-            serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
+            user = serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
+            #Creamos los horarios segun el shift
+            if self.request.data['shift']=="Mañana":
+                createSchedulesMorning(user.id)
+            elif self.request.data['shift']=="Tarde":
+                createSchedulesAfternoon(user.id)
+            else:
+                raise NotFound("El shift es incorrecto. Debe ser Mañana o Tarde")
 
 # Vista para el login de usuarios
 class UserLoginView(generics.CreateAPIView):
@@ -52,6 +60,7 @@ class UserLoginView(generics.CreateAPIView):
         # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            if user.status==False: return Response({'error': 'Tu cuenta ha sido bloqueado, contacte a un administrador'}, status=status.HTTP_401_UNAUTHORIZED) 
             refresh = RefreshToken.for_user(user)
             access_token = refresh.access_token
             access_token.set_exp(lifetime=timedelta(days=1))
@@ -63,9 +72,7 @@ class UserLoginView(generics.CreateAPIView):
                 'access_token': str(access_token),
                 'user': serializer.data,
                 'role': getRol(user.role)
-            }, status=status.HTTP_200_OK)
-        elif user.status==False: return Response({'error': 'Tu cuenta ha sido bloqueado, contacte a un administrador'}, status=status.HTTP_401_UNAUTHORIZED) 
-        
+            }, status=status.HTTP_200_OK)        
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
