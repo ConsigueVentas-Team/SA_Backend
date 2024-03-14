@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=False)
     # groups = serializers.CharField(write_only=True)
     # user_permissions = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
         exclude = ['groups', 'user_permissions']
@@ -34,6 +35,10 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['role'] = self.get_role(instance)
+        
+        if data['status_description'] is None:
+            data['status_description'] = None
+            
         return data
 
 # Serializer para cambio de contraseña

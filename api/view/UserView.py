@@ -195,6 +195,11 @@ class UserUpdateView(generics.UpdateAPIView):
         def getStatus():
             return data.get("status")=="true"
         
+        # Verificar si es una cadena vacía o solo contiene espacios en blanco
+        status_description = data.get('status_description')
+        if status_description.strip() == "" or status_description == "null":  
+            status_description = None
+
         # Crear un diccionario con los datos que quieres actualizar
         newData = {
             "name": data.get('name'),
@@ -206,7 +211,7 @@ class UserUpdateView(generics.UpdateAPIView):
             "date_start": data.get('date_start'),
             "date_end": data.get('date_end'),
             "status": getStatus(),
-            "status_description": data.get('status_description'),
+            "status_description": status_description,
             "position_id": data.get('position_id'),
             "role": data.get('role'),
             "shift": data.get('shift'),
