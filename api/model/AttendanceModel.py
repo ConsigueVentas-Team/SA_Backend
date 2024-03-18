@@ -3,19 +3,19 @@ from api.model.UserModel import User
 
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
-    admissionTime = models.TimeField()
-    departureTime = models.TimeField()
-    admissionImage = models.CharField(max_length=255)
-    departureImage = models.CharField(max_length=255)
-    attendance = models.BooleanField()
-    justification = models.BooleanField()
-    delay = models.BooleanField()
+    admissionTime = models.TimeField(null=True)
+    departureTime = models.TimeField(null=True)
+    admissionImage = models.CharField(max_length=255, null=True)
+    departureImage = models.CharField(max_length=255, null=True)
+    attendance = models.BooleanField(default=False)
+    justification = models.BooleanField(default=False)
+    delay = models.BooleanField(default=False)
     date = models.DateField()
     
-    #clave foránea con Usuario
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    # Clave foránea con Usuario
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    #auditoría
+    # Auditoría
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

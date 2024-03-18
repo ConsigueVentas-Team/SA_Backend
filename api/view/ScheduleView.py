@@ -28,6 +28,7 @@ class ScheduleListCreateView(generics.ListCreateAPIView):
 
             return Response({'message': 'Horarios creados exitosamente.', 'data': request.data}, status=status.HTTP_201_CREATED)
         except Exception as e:
+            print(str(e))
             return Response({'message': f'Error al crear los horarios: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     

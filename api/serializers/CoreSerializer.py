@@ -5,3 +5,9 @@ class CoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Core
         fields = '__all__'
+
+class CoreSerializerList(serializers.ModelSerializer):
+    class Meta:
+        model = Core
+        fields = '__all__'
+        depth = 1

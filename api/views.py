@@ -9,3 +9,4 @@ from api.view.ScheduleView import *
 from api.view.EvaluationView import *
 from api.view.NotificationView import *
 from api.view.AttendanceView import *
+from api.view.ReportView import *

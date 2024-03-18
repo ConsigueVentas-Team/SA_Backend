@@ -79,11 +79,11 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
             os.makedirs(folder_path, exist_ok=True)
 
-            # guardar imagen en el directorio 'justifications'
+            # guardar imagen en el directorio 'anttendances'
             with open(os.path.join(folder_path, filename), 'wb') as f:
                 f.write(evidence.read())
             
-            return f'{folder}/{current_date}/{filename}'
+            return f'media/{folder}/{current_date}/{filename}'
        except Exception as e:
           return Response({"details": f"Error al guardar la imagen: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -100,21 +100,27 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             raise Exception('Error al verificar la justificación.')
 
     def post(self, request, *args, **kwargs):
+        print(self.request.data)
         try:
             #Asignacion de datos
-            print("Data:", request.data)
             auth_user_id = request.user.id
             current_time = datetime.now()
             today = datetime.now().date()
             
             #Buscamos la asistencia de hoy
             attendance = Attendance.objects.filter(user_id=auth_user_id, date=today).first()
-
             #Validamos si existe la asistencia de hoy
+            if attendance is None:
+                # No se encontró ninguna entrada de asistencia para el usuario y la fecha dada
+                # Por lo tanto, creamos una nueva entrada de asistencia
+                attendance = Attendance.objects.create(user_id=auth_user_id, date=today)
+
             if attendance.attendance == 0 and attendance.delay == 0:
+                print("Marcado de entrada")
                 #Marcado de entrada
                 self.update_check_in(attendance, current_time, request.data.get('admissionImage'), auth_user_id)
             else:
+                print("Marcado de salida")
                 #Marcado de salida
                 self.update_check_out(attendance, current_time, request.data.get('departureImage'))
 
@@ -130,10 +136,10 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         try:
             # Formateo para día de la semana
             day_of_week = current_time.weekday()
-
+            print(auth_user_id)
             # Obtener el horario personalizado para el usuario logueado
-            schedule_user = Schedule.objects.filter(user=auth_user_id, dayOfWeek=day_of_week).get()
-            
+            schedule_user = Schedule.objects.filter(user=auth_user_id,dayOfWeek=day_of_week).first()
+            print(schedule_user)
             #Si exsite el horario, procedemos a marcar la entrada
             if schedule_user:
                 # Asignacion de parametros
@@ -166,6 +172,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             else:
                 raise Exception('No existe un horario para el usuario elegido')
         except Exception as e:
+            print(e)
             raise Exception('Error al actualizar el check-in.')
 
     def update_check_out(self, attendance, current_time, image_path):

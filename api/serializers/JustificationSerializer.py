@@ -9,8 +9,24 @@ class JustificationSerializer(serializers.ModelSerializer):
 
     class Meta():
         model = Justification
+        exclude = ['reason_decline', 'action_by','user']
+
+class JustificationSerializerList_(serializers.ModelSerializer):
+    user = UserSerializer()
+    justification_status = serializers.ReadOnlyField()
+
+    class Meta():
+        model = Justification
         exclude = ['reason_decline', 'action_by']
         depth = 4
+
+class JustificationSerializerList(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.id')
+    justification_status = serializers.ReadOnlyField()
+
+    class Meta():
+        model = Justification
+        exclude = ['reason_decline', 'action_by']
 
 class JustificationReviewSerializer(serializers.ModelSerializer):
     user = UserSerializer()

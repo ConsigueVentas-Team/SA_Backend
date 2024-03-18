@@ -14,20 +14,25 @@ import os
 from django.core.files import File
 from datetime import datetime
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.contrib.auth.hashers import make_password
+from rest_framework.exceptions import NotFound
+from api.functions.createSchedule import *
+
 class UserRegisterView(generics.CreateAPIView):
     serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     def upload_image(self):
         try:
             avatar = self.request.data.get('avatar')
-            folder_path = os.path.join(settings.MEDIA_ROOT,'users')
+            folder_path = os.path.join(settings.MEDIA_ROOT,'photos')
             os.makedirs(folder_path, exist_ok=True)
             filename = self.request.data.get('username') + '.' + avatar.name.split('.')[-1] #Username mas la extención del archivo
             with open(os.path.join(folder_path,filename),'wb') as f:
                 f.write(avatar.read())
-            return f'users/{filename}'
+            return f'photos/{filename}'
         except Exception as e:
-            print(e)
             return Response({"details": f"Error al guardar la imagen: {str(e)}"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def perform_create(self, serializer):
@@ -35,7 +40,17 @@ class UserRegisterView(generics.CreateAPIView):
         position = Position.objects.get(pk=self.request.data['position'])
         if position:
             serializer.is_valid(raise_exception=True)
-            serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
+            #Descomentar esta línea en producción
+            # user = serializer.save(is_active=True,status=True,role=3,is_staff=False,is_superuser=False,position=position)
+            #Descomentar esta línea en desarrollo
+            user = serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
+            #Creamos los horarios segun el shift
+            if self.request.data['shift']=="Mañana":
+                createSchedulesMorning(user.id)
+            elif self.request.data['shift']=="Tarde":
+                createSchedulesAfternoon(user.id)
+            else:
+                raise NotFound("El shift es incorrecto. Debe ser Mañana o Tarde")
 
 # Vista para el login de usuarios
 class UserLoginView(generics.CreateAPIView):
@@ -50,8 +65,8 @@ class UserLoginView(generics.CreateAPIView):
 
         # Autenticar al usuario
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
+            if user.status==False: return Response({'error': 'Tu cuenta ha sido bloqueado, contacte a un administrador'}, status=status.HTTP_401_UNAUTHORIZED) 
             refresh = RefreshToken.for_user(user)
             access_token = refresh.access_token
             access_token.set_exp(lifetime=timedelta(days=1))
@@ -63,7 +78,7 @@ class UserLoginView(generics.CreateAPIView):
                 'access_token': str(access_token),
                 'user': serializer.data,
                 'role': getRol(user.role)
-            }, status=status.HTTP_200_OK)
+            }, status=status.HTTP_200_OK)        
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
@@ -176,14 +191,55 @@ class UserUpdateView(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         user = self.get_object()  # Obtener el objeto User a actualizar
-        avatar = request.data.get('avatar')
+        data = request.data
+
+        # Obtener el avatar del diccionario de datos
+        avatar = data.get('avatar')
+        def getStatus():
+            return data.get("status")=="true"
         
-        if avatar:  # Si se proporcionó un avatar
+        # Verificar si es una cadena vacía o solo contiene espacios en blanco
+        status_description = data.get('status_description')
+        if status_description.strip() == "" or status_description == "null":  
+            status_description = None
+
+        # Crear un diccionario con los datos que quieres actualizar
+        newData = {
+            "name": data.get('name'),
+            "surname": data.get('surname'),
+            "dni": data.get('dni'),
+            "username": data.get('dni'),
+            "email": data.get('email'),
+            "cellphone": data.get('cellphone'),
+            "date_start": data.get('date_start'),
+            "date_end": data.get('date_end'),
+            "status": getStatus(),
+            "status_description": status_description,
+            "position_id": data.get('position_id'),
+            "role": data.get('role'),
+            "shift": data.get('shift'),
+            "password": make_password(data.get('dni')),
+            # Incluye aquí otros campos que quieras actualizar
+        }
+        # Guardar el avatar si se proporciona
+        if avatar:
             if isinstance(avatar, File):  # Verificar si es un objeto File
-                # Actualizar el avatar del usuario
-                user.avatar = avatar
-        # Guardar los demás campos del usuario (si hay algún cambio) y devolver una respuesta exitosa
+                # Eliminar el avatar anterior
+                if user.avatar:
+                    avatar_path = user.avatar.path
+                    if default_storage.exists(avatar_path):
+                        default_storage.delete(avatar_path)
+                
+                # Asignar el nuevo avatar al usuario
+                user.avatar.save(avatar.name, ContentFile(avatar.read()))
+
+        # Actualizar los campos del usuario
+        for key, value in newData.items():
+            setattr(user, key, value)
+
+        # Guardar los cambios en el usuario
         user.save()
+
         return Response({"message": "Usuario actualizado correctamente"})
     
 class UserBirthdayDetailsView(generics.ListAPIView):

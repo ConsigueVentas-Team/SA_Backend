@@ -3,6 +3,15 @@ from django.contrib.auth.models import UserManager
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin 
 from api.model.PositionModel import Position
 from api.enums import RoleEnum
+import os
+
+def avatar_path(instance, filename):
+    # Obtén el nombre de usuario del objeto de usuario
+    dni = instance.dni
+    # Obtén la extensión del archivo
+    _, ext = os.path.splitext(filename)
+    # Construye el nombre del archivo de avatar usando el nombre de usuario y la extensión
+    return os.path.join('photos', f'{dni}{ext}')
 
 class User(AbstractBaseUser,PermissionsMixin):
     id = models.AutoField(primary_key=True)
@@ -12,10 +21,11 @@ class User(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
     status = models.BooleanField(default=True)
+    status_description = models.CharField(max_length=100,null=True, blank=True)
     dni = models.CharField(max_length=10,unique=True)
     cellphone = models.CharField(max_length=15)
     birthday = models.DateField()
-    avatar = models.ImageField()
+    avatar = models.ImageField(upload_to=avatar_path)
     date_start = models.DateField()
     date_end = models.DateField()
     shift = models.CharField(max_length=15)

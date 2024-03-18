@@ -31,8 +31,8 @@ urlpatterns = [
     path('birthday/nextBirthday',views.UserNextBirthdayView.as_view(),name="birthday_details"),
 
     # -------- POSITION URLs -------------#
-    path('position/list',views.PositionListCreateView.as_view(),name="position-list"), 
-    path('position/create',views.PositionListCreateView.as_view(),name="position-create"),
+    path('position/list',views.PositionListView.as_view(),name="position-list"), 
+    path('position/create',views.PositionCreateView.as_view(),name="position-create"),
     path('position/update/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-update"),
     path('position/delete/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-delete"),
     path('position/details/<int:id>',views.PositionDetailsUpdateDestroy.as_view(),name="position-details"),
@@ -45,8 +45,8 @@ urlpatterns = [
     path('departments/details/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-details"),
 
     # -------- CORE URLs -------------#
-    path('cores/list',views.CoreListCreateView.as_view(),name="core-list"),
-    path('cores/create',views.CoreListCreateView.as_view(),name="core-create"),
+    path('cores/list',views.CoreListView.as_view(),name="core-list"),
+    path('cores/create',views.CoreCreateView.as_view(),name="core-create"),
     path('cores/update/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-update"),
     path('cores/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('cores/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
@@ -68,4 +68,7 @@ urlpatterns = [
     path('attendance/list', views.AttendanceList.as_view(), name="attendance-list"),
     path('attendance/id', views.AttendanceByID.as_view(), name="attendance-id-list"),
     path('attendance/create', views.AttendanceCreateAPIView.as_view(), name="attendance-create"),
+    
+    #---------- REPORTS URLs -----------#
+    path('reports/list', views.ReportListAPIView.as_view(), name='get_reports'),
 ]
