@@ -212,6 +212,7 @@ class UserUpdateView(generics.UpdateAPIView):
             "date_end": data.get('date_end'),
             "status": getStatus(),
             "status_description": status_description,
+            "is_active": getStatus(),
             "position_id": data.get('position_id'),
             "role": data.get('role'),
             "shift": data.get('shift'),
