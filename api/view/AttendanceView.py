@@ -75,7 +75,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             #nuevo nombre de imagen, formado por la fecha actual y el nombre original
             filename = f'{current_time}-{evidence.name}'
 
-            folder = 'media/attendances'
+            folder = 'attendances/'
             folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
             os.makedirs(folder_path, exist_ok=True)
 

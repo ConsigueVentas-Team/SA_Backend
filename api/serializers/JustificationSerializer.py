@@ -4,12 +4,11 @@ from .UserSerializer import UserSerializer
 from api.serializers.UserSerializer import UserSerializer
 
 class JustificationSerializer(serializers.ModelSerializer):
-    user = UserSerializer(required=False)
     justification_status = serializers.ReadOnlyField()
 
-    class Meta():
+    class Meta:
         model = Justification
-        exclude = ['reason_decline', 'action_by','user']
+        exclude = ['reason_decline', 'action_by', 'user']
 
 class JustificationSerializerList_(serializers.ModelSerializer):
     user = UserSerializer()
