@@ -100,7 +100,6 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             raise Exception('Error al verificar la justificación.')
 
     def post(self, request, *args, **kwargs):
-        print(self.request.data)
         try:
             #Asignacion de datos
             auth_user_id = request.user.id
@@ -116,11 +115,9 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 attendance = Attendance.objects.create(user_id=auth_user_id, date=today)
 
             if attendance.attendance == 0 and attendance.delay == 0:
-                print("Marcado de entrada")
                 #Marcado de entrada
                 self.update_check_in(attendance, current_time, request.data.get('admissionImage'), auth_user_id)
             else:
-                print("Marcado de salida")
                 #Marcado de salida
                 self.update_check_out(attendance, current_time, request.data.get('departureImage'))
 
@@ -136,10 +133,10 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         try:
             # Formateo para día de la semana
             day_of_week = current_time.weekday()
-            print(auth_user_id)
+
             # Obtener el horario personalizado para el usuario logueado
             schedule_user = Schedule.objects.filter(user=auth_user_id,dayOfWeek=day_of_week).first()
-            print(schedule_user)
+            
             #Si exsite el horario, procedemos a marcar la entrada
             if schedule_user:
                 # Asignacion de parametros

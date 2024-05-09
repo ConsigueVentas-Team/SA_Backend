@@ -38,9 +38,9 @@ class UserRegisterView(generics.CreateAPIView):
         if position:
             serializer.is_valid(raise_exception=True)
             #Descomentar esta línea en producción
-            # user = serializer.save(is_active=True,status=True,role=3,is_staff=False,is_superuser=False,position=position)
+            user = serializer.save(is_active=True,status=True,role=3,is_staff=False,is_superuser=False,position=position)
             #Descomentar esta línea en desarrollo
-            user = serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
+            #user = serializer.save(is_active=True,status=True,role=1,is_staff=True,is_superuser=True,position=position)
             #Creamos los horarios segun el shift
             if self.request.data['shift']=="Mañana":
                 createSchedulesMorning(user.id)
@@ -257,5 +257,31 @@ class UserBirthdayDetailsView(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         users = self.get_queryset().filter(is_active=True)
+        serializer = self.get_serializer(users, many=True)
+        return Response(serializer.data)
+
+class UserNextBirthdayView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.filter(is_active=True)
+        mes = self.request.query_params.get('m')
+        dia = self.request.query_params.get('d')
+
+        if mes:
+            queryset = queryset.filter(birthday__month=int(mes))
+
+        if dia:
+            # Filtra los cumpleaños que son mayores que el día actual
+            # current_date = datetime.now().date()
+            queryset = queryset.filter(birthday__day__gte=int(dia), birthday__month__gte=int(mes))
+
+        # Ordena los resultados por fecha de cumpleaños en orden ascendente
+        queryset = queryset.order_by('birthday__month', 'birthday__day')
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        users = self.get_queryset()
         serializer = self.get_serializer(users, many=True)
         return Response(serializer.data)

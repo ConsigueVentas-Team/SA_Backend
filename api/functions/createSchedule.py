@@ -1,7 +1,7 @@
 from api.model.ScheduleModel import Schedule
 
 schedulesMorning = [
-    {"dayOfWeek": 1, "startTime": "08:00", "endTime": "13:00"},
+    {"dayOfWeek": 0, "startTime": "08:00", "endTime": "13:00"},
     {"dayOfWeek": 1, "startTime": "08:00", "endTime": "13:00"}, 
     {"dayOfWeek": 2, "startTime": "08:00", "endTime": "13:00"},
     {"dayOfWeek": 3, "startTime": "08:00", "endTime": "13:00"},
@@ -10,12 +10,12 @@ schedulesMorning = [
 ]
 
 schedulesAfternoon = [
-    {"dayOfWeek": 1, "startTime": "14:30", "endTime": "19:00"},
-    {"dayOfWeek": 1, "startTime": "14:30", "endTime": "19:00"}, 
-    {"dayOfWeek": 2, "startTime": "14:30", "endTime": "19:00"},
-    {"dayOfWeek": 3, "startTime": "14:30", "endTime": "19:00"},
-    {"dayOfWeek": 4, "startTime": "14:30", "endTime": "19:00"},
-    {"dayOfWeek": 5, "startTime": "14:30", "endTime": "19:00"},
+    {"dayOfWeek": 0, "startTime": "14:00", "endTime": "19:00"},
+    {"dayOfWeek": 1, "startTime": "14:00", "endTime": "19:00"}, 
+    {"dayOfWeek": 2, "startTime": "14:00", "endTime": "19:00"},
+    {"dayOfWeek": 3, "startTime": "14:00", "endTime": "19:00"},
+    {"dayOfWeek": 4, "startTime": "14:00", "endTime": "19:00"},
+    {"dayOfWeek": 5, "startTime": "14:00", "endTime": "19:00"},
 ]
 
 def createSchedulesMorning(user_id):
