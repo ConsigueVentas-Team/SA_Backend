@@ -65,6 +65,11 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
         # Convertir las cadenas de texto a objetos de tipo datetime.time
         admission_time = datetime.strptime(admission_time_str, '%H:%M:%S').time()
         return admission_time > start_time
+    
+    def check_absence(self, admission_time, end_time):
+        # Convertir las cadenas de texto a objetos de tipo datetime.time
+        admission_time = datetime.strptime(admission_time, '%H:%M:%S').time()
+        return admission_time > end_time
         
     def upload_image(self, image):
        try:
@@ -149,19 +154,34 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 attendance.user_id = auth_user_id
                 attendance.date = current_time.date()
 
+                # Verificar si el usuario esta marcando fuera de su hora de salida, lo cual es considerado inasistencia
+                absence = self.check_absence(admission_time, schedule_user.endTime)
+
                 # Verificar si el usuario llegó tarde según el horario personalizado
                 delay = self.is_late_for_check_in(admission_time, schedule_user.startTime)
                 
-                if delay:
-                    # El usuario llegó tarde, verificamos si tiene justificacion
+                # Si tiene tardanza o inasistencia, se verifica si tiene justificacion
+                if delay or absence:
                     justification_type = self.has_justification(auth_user_id)
-                    #No tiene justificacion, marcamos tardanza
+                    # No tiene justificacion
                     if justification_type == 2:
-                        attendance.delay = 1
-                    #Tiene justificacion, marcamos tardanza pero justificada
+                        # Verificar si tiene inasistencia para marcar inasistencia injustificada
+                        if absence:
+                            attendance.delay = 0
+                            attendance.attendance = 0
+                        # Sino se marcará tardanza injustificada
+                        else:
+                            attendance.delay = 1
+                    # Tiene justificacion
                     else:
                         attendance.justification = 1
-                        attendance.delay = 1
+                        # Verificar si tiene inasistencia para marcar inasistencia justificada
+                        if absence:
+                            attendance.delay = 0
+                            attendance.attendance = 0
+                        # Sino se marcará tardanza justificada
+                        else:
+                            attendance.delay = 1
                 else:
                     # El usuario llegó a tiempo
                     attendance.attendance = 1

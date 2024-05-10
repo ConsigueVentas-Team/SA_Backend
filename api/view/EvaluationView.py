@@ -13,7 +13,7 @@ class EvaluationListCreateView(generics.ListCreateAPIView):
   pagination_class = None
   def create(self, request, *args, **kwargs):
     #solo el manager o el Team_lEader puede crear
-    if request.user.role==1 or request.user.role==2:
+    if request.user.role==1 or request.user.role==2 or request.user.role == 4:
       try:                             
         serializer = self.get_serializer(data=request.data)
         

@@ -27,3 +27,12 @@ class IsCollaborator(BasePermission):
 
     def has_permission(self, request, view):
         return bool(request.user.role == 3)
+    
+#Pernmiso de Lider Departamento 
+class IsTeamLeader(BasePermission):
+    """
+    Allows access only to Team leader users.
+    """
+
+    def has_permission(self, request, view):
+        return bool(request.user.role == 4)

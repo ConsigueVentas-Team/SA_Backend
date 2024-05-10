@@ -4,6 +4,7 @@ class RoleEnum(Enum):
     MANAGEMENT = 1
     TEAM_LEADER = 2
     COLLABORATOR = 3
+    DEPARTMENT_LEADER = 4
 
 class JustificationStatus(Enum):
   ACEPTADO = 1

@@ -9,7 +9,7 @@ class EvaluationSerializer(serializers.ModelSerializer):
 
   def get_promedio(self,data,*args,**kwargs):
       #caso de que es lider o alto cargo solo ve su promedio de autoevaluacion
-    if(data.user.role == 1 or data.user.role == 2):
+    if(data.user.role == 1 or data.user.role == 2 or data.user.role == 4):
         autoevaluation = data.autoevaluation
         return autoevaluation
 
