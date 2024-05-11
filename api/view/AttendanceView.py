@@ -100,7 +100,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
             if justification_exists is None:
                 return flag
             else:
-                return justification_exists.type  # 0 | 1
+                return justification_exists.justification_type  # 0 | 1
         except Exception as e:
             raise Exception('Error al verificar la justificación.')
 
@@ -119,7 +119,7 @@ class AttendanceCreateAPIView(generics.ListCreateAPIView):
                 # Por lo tanto, creamos una nueva entrada de asistencia
                 attendance = Attendance.objects.create(user_id=auth_user_id, date=today)
 
-            if attendance.attendance == 0 and attendance.delay == 0:
+            if attendance.attendance == 0 and attendance.delay == 0 and (attendance.admissionTime is None):
                 #Marcado de entrada
                 self.update_check_in(attendance, current_time, request.data.get('admissionImage'), auth_user_id)
             else:
