@@ -5,7 +5,7 @@ from api.model.UserModel import User
 class Justification(models.Model):
   justification_date = models.DateField()
   reason = models.TextField()
-  evidence = models.ImageField(max_length=200)
+  evidence = models.FileField(max_length=200)
   justification_type = models.BooleanField()
   justification_status = models.IntegerField(choices=[(e.value, e.name) for e in JustificationStatus])
   reason_decline = models.TextField(null=True)

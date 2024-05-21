@@ -90,16 +90,16 @@ WSGI_APPLICATION = 'SA_Backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': BASE_DIR / 'db.sqlite3',
+     }
     
-    'default': dj_database_url.config(
-        # url de postgressql
-        default='postgresql://'+os.environ.get('DB_USER')+':'+os.environ.get('DB_PASSWORD')+'@'+os.environ.get('DB_HOST')+':'+os.environ.get('DB_PORT')+'/'+os.environ.get('DB_NAME'),
-        conn_max_age=600
-    )
+    #'default': dj_database_url.config(
+    #    # url de postgressql
+    #    default='postgresql://'+os.environ.get('DB_USER')+':'+os.environ.get('DB_PASSWORD')+'@'+os.environ.get('DB_HOST')+':'+os.environ.get('DB_PORT')+'/'+os.environ.get('DB_NAME'),
+     #   conn_max_age=600
+    #)
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'db_sistemaerp',
