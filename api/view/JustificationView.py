@@ -8,14 +8,6 @@ from rest_framework.exceptions import APIException
 from datetime import datetime
 from django.conf import settings
 import os
-import fitz  #pip install PyMuPDF
-
-def convert_pdf_to_image(pdf_path, output_path):
-    pdf_document = fitz.open(pdf_path)
-    for page_num in range(pdf_document.page_count):
-        page = pdf_document[page_num]
-        image = page.get_pixmap()
-        image.save(output_path.format(page_num))
 
 # Crear justificaciones
 class JustificationCreateView(generics.CreateAPIView):
@@ -29,23 +21,18 @@ class JustificationCreateView(generics.CreateAPIView):
             current_date = datetime.now().strftime('%Y-%m-%d')
             current_time = datetime.now().time().strftime('%H%M%S')
 
-            # Nuevo nombre de imagen, formado por la fecha actual y el nombre original
+            #nuevo nombre de imagen, formado por la fecha actual y el nombre original
             filename = f'{current_time}-{evidence.name}'
 
             folder = 'justifications'
             folder_path = os.path.join(settings.MEDIA_ROOT, folder, current_date)
             os.makedirs(folder_path, exist_ok=True)
 
-            # Guardar imagen en el directorio 'justifications' después de convertir el PDF a imagen
+            # guardar imagen en el directorio 'justifications'
             with open(os.path.join(folder_path, filename), 'wb') as f:
                 f.write(evidence.read())
-
-            pdf_path = os.path.join(folder_path, filename)  # Ruta del archivo PDF
-            image_output_path = os.path.join(folder_path, 'image_{}.png')  # Ruta de salida de la imagen
-
-            convert_pdf_to_image(pdf_path, image_output_path)  # Convertir PDF a imagen
-
-            return f'{folder}/{current_date}/image_0.png'  # Devolver la ruta de la imagen convertida
+            
+            return f'{folder}/{current_date}/{filename}'
        except Exception as e:
           return Response({"details": f"Error al guardar la imagen: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
        
