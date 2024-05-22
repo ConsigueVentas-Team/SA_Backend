@@ -33,8 +33,17 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Application definition
+# Settings for X-Frame-Options
+X_FRAME_OPTIONS = 'ALLOW-FROM http://127.0.0.1:8000'
 
+# Settings for Content Security Policy (CSP)
+CSP_DEFAULT_SRC = ["'self'"]
+CSP_SCRIPT_SRC = ["'self'"]
+CSP_STYLE_SRC = ["'self'"]
+CSP_IMG_SRC = ["'self'", "data:"]
+CSP_FRAME_ANCESTORS = ["'self'", "*"]
+
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,19 +54,16 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework.exceptions',
-    'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
-    'django_rest_passwordreset' # Para cuando olvidamos la contraseña
-
+    'django_rest_passwordreset', # Para cuando olvidamos la contraseña
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware', #Para el CSP
+    'csp.middleware.CSPMiddleware',    #Para el CSP
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
