@@ -58,6 +58,10 @@ urlpatterns = [
 
     #---------- NOTIFICATION URLs -----------#
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
+    path('notification/create', views.NotificationListCreateView.as_view(), name="notification-create"),
+    path('notification/update/<int:pk>', views.NotificationDetailView.as_view(), name="notification-update"),
+    path('notification/delete/<int:pk>', views.NotificationDetailView.as_view(), name="notification-delete"),
+    path('notification/details/<int:pk>', views.NotificationDetailView.as_view(), name="notification-details"),
 
     #---------- EVALUATION URLs -----------#
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
