@@ -22,8 +22,8 @@ class DepartmentStatisticsView(View):
     def get(self, request, *args, **kwargs):
         # Obtener todos los departamentos con las estadísticas anotadas
         departments = Department.objects.annotate(
-            total_users= Count('core__position__user'),
-            null_count= Count(Case(When(core__position__user__status_description__isnull=True, then=1), output_field=IntegerField())),
+            total_users= Count('core__position__user', distinct=True),
+            null_count= Count(Case(When(core__position__user__status_description__isnull=True, core__position__user__isnull=False, then=1), output_field=IntegerField())),
             terminated_count=Count(Case(When(core__position__user__status_description="Termino su convenio", then=1), output_field=IntegerField())),
             retired_count=Count(Case(When(core__position__user__status_description="Retirado", then=1), output_field=IntegerField())),
         )
