@@ -38,7 +38,7 @@ class DepartmentStatisticsView(View):
                 'id': department.id,
                 'name': department.name,
                 'Total': department.total_users,
-                'NULL': department.null_count,
+                'Activos': department.null_count,
                 'Termino su convenio': department.terminated_count,
                 'Retirado': department.retired_count,
             }
