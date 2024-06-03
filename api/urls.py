@@ -43,7 +43,8 @@ urlpatterns = [
     path('departments/update/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-update"),
     path('departments/delete/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-delete"),
     path('departments/details/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-details"),
-
+    path('departments/statistics', views.DepartmentStatisticsView.as_view(), name="department-statistics"),
+    
     # -------- CORE URLs -------------#
     path('cores/list',views.CoreListView.as_view(),name="core-list"),
     path('cores/create',views.CoreCreateView.as_view(),name="core-create"),
