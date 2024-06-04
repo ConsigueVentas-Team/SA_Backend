@@ -51,6 +51,7 @@ urlpatterns = [
     path('cores/update/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-update"),
     path('cores/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('cores/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
+    path('cores/statistics', views.CoreStatisticsView.as_view(), name="core-statistics"),
     
     #---------- SCHEDULE URLs -----------#
     path('schedule/list',views.ScheduleListCreateView.as_view(),name="schedule-list"),
