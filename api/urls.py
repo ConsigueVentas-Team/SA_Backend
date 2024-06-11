@@ -43,13 +43,15 @@ urlpatterns = [
     path('departments/update/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-update"),
     path('departments/delete/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-delete"),
     path('departments/details/<int:id>',views.DepartmentDetailsUpdateDestroy.as_view(),name="department-details"),
-
+    path('departments/statistics', views.DepartmentStatisticsView.as_view(), name="department-statistics"),
+    
     # -------- CORE URLs -------------#
     path('cores/list',views.CoreListView.as_view(),name="core-list"),
     path('cores/create',views.CoreCreateView.as_view(),name="core-create"),
     path('cores/update/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-update"),
     path('cores/delete/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-delete"),
     path('cores/details/<int:id>',views.CoreDetailsUpdateDestroy.as_view(),name="core-details"),
+    path('cores/statistics', views.CoreStatisticsView.as_view(), name="core-statistics"),
     
     #---------- SCHEDULE URLs -----------#
     path('schedule/list',views.ScheduleListCreateView.as_view(),name="schedule-list"),
@@ -58,6 +60,10 @@ urlpatterns = [
 
     #---------- NOTIFICATION URLs -----------#
     path('notification/list', views.NotificationListCreateView.as_view(), name="notification-list"),
+    path('notification/create', views.NotificationListCreateView.as_view(), name="notification-create"),
+    path('notification/update/<int:pk>', views.NotificationDetailView.as_view(), name="notification-update"),
+    path('notification/delete/<int:pk>', views.NotificationDetailView.as_view(), name="notification-delete"),
+    path('notification/details/<int:pk>', views.NotificationDetailView.as_view(), name="notification-details"),
 
     #---------- EVALUATION URLs -----------#
     path('evaluation/list', views.EvaluationListCreateView.as_view(), name="evaluation-list"),
