@@ -46,36 +46,3 @@ class JustificationReviewSerializer(serializers.ModelSerializer):
             'action_by'
         )
         depth = 3
-
-""""
-class JustificationViewSet(viewsets.ModelViewSet):
-    queryset = Justification.objects.all()
-    serializer_class = JustificationSerializer
-
-    @action(detail=False, methods=['get'])
-    def search_by_type(self, request):
-        justification_type = request.query_params.get('justification_type', None)
-        if justification_type is not None:
-            self.queryset = self.queryset.filter(justification_type=justification_type)
-        if not self.queryset:
-            return Response({'message': 'No se encontraron justificaciones'}, status=404)
-        return Response(self.get_serializer(self.queryset, many=True).data)
-
-    @action(detail=False, methods=['get'])
-    def search_by_status(self, request):
-        justification_status = request.query_params.get('justification_status', None)
-        if justification_status is not None:
-            self.queryset = self.queryset.filter(justification_status=justification_status)
-        if not self.queryset:
-            return Response({'message': 'No se encontraron justificaciones'}, status=404)
-        return Response(self.get_serializer(self.queryset, many=True).data)
-
-    @action(detail=False, methods=['get'])
-    def search_by_date(self, request):
-        justification_date = request.query_params.get('justification_date', None)
-        if justification_date is not None:
-            self.queryset = self.queryset.filter(justification_date=justification_date)
-        if not self.queryset:
-            return Response({'message': 'No se encontraron justificaciones'}, status=404)
-        return Response(self.get_serializer(self.queryset, many=True).data)
-"""
