@@ -129,3 +129,31 @@ class JustificationListView(views.APIView):
         serializer = JustificationReviewSerializer(paginated_data, many=True)
 
         return paginated_query.get_paginated_response(serializer.data, stats)
+
+
+class SearchByTypeView(generics.ListAPIView):
+    serializer_class = JustificationSerializer
+
+    def get_queryset(self):
+        queryset = Justification.objects.filter(justification_type=self.kwargs['type'])
+        if not queryset:
+            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        return queryset
+
+class SearchByStatusView(generics.ListAPIView):
+    serializer_class = JustificationSerializer
+
+    def get_queryset(self):
+        queryset = Justification.objects.filter(justification_status=self.kwargs['status'])
+        if not queryset:
+            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        return queryset
+
+class SearchByDateView(generics.ListAPIView):
+    serializer_class = JustificationSerializer
+
+    def get_queryset(self):
+        queryset = Justification.objects.filter(justification_date=self.kwargs['date'])
+        if not queryset:
+            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        return queryset
