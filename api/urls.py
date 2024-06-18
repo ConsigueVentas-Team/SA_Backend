@@ -11,6 +11,10 @@ urlpatterns = [
     path('justification/accept/<int:pk>', views.JustificationRetrieveAcceptView.as_view(), name='accept_justification'),
     path('justification/decline/<int:pk>', views.JustificationRetrieveDeclineView.as_view(), name='decline_justification'),
     path('justification/delete/<int:pk>', views.JustificationDestroyView.as_view(), name='destroy_justification'),
+    
+    path('justification/search_by_type/<str:type>', views.SearchByTypeView.as_view(), name='search_by_type'),
+    path('justification/search_by_status/<str:status>', views.SearchByStatusView.as_view(), name='search_by_status'),
+    path('justification/search_by_date/<str:date>', views.SearchByDateView.as_view(), name='search_by_date'),
 
     # ------- AUTHENTICATION URLs ----------#
     path('register',views.UserRegisterView.as_view(),name="user_register"),#Registrar un usuario
