@@ -1,0 +1,201 @@
+Traceback (most recent call last):
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 11, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 22, in <module>
+    main()
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 13, in main
+    raise ImportError(
+ImportError: Couldn't import Django. Are you sure it's installed and available on your PYTHONPATH environment variable? Did you forget to activate a virtual environment?
+Traceback (most recent call last):
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 11, in main
+    from django.core.management import execute_from_command_line
+ModuleNotFoundError: No module named 'django'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 22, in <module>
+    main()
+  File "/root/sistema_asistencia/SA_Backend/manage.py", line 13, in main
+    raise ImportError(
+ImportError: Couldn't import Django. Are you sure it's installed and available on your PYTHONPATH environment variable? Did you forget to activate a virtual environment?
+Watching for file changes with StatReloader
+[21/Jun/2024 13:07:44] "GET /api/justification/list HTTP/1.1" 200 5702
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+[21/Jun/2024 13:07:44] "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+Not Found: /favicon.ico
+[21/Jun/2024 13:07:45] "GET /favicon.ico HTTP/1.1" 404 2348
+Not Found: /cart.json
+[21/Jun/2024 13:07:45] "GET /cart.json HTTP/1.1" 404 2342
+Invalid HTTP_HOST header: '5e52-165-22-180-66.ngrok-free.app'. You may need to add '5e52-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:08:26] "GET / HTTP/1.1" 400 70979
+Invalid HTTP_HOST header: '5e52-165-22-180-66.ngrok-free.app'. You may need to add '5e52-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:08:27] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: '5e52-165-22-180-66.ngrok-free.app'. You may need to add '5e52-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:08:27] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:17:49] "GET / HTTP/1.1" 400 70979
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:17:50] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:17:50] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:20:04] "GET / HTTP/1.1" 400 70979
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:20:05] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:20:05] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:20:07] "GET / HTTP/1.1" 400 70972
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:20:08] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:20:08] "GET /favicon.ico HTTP/1.1" 400 70780
+Not Found: /cart.json
+[21/Jun/2024 13:20:57] "GET /cart.json HTTP/1.1" 404 2342
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:21:03] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:21:03] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:21:03] "GET / HTTP/1.1" 400 70972
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:21:04] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:21:04] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:21:08] "GET / HTTP/1.1" 400 70835
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:21:09] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:21:09] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:22:09] "GET / HTTP/1.1" 400 70972
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:22:10] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:10] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:22:11] "GET / HTTP/1.1" 400 70972
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:22:12] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:12] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:22:14] "GET / HTTP/1.1" 400 70835
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:22:15] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:15] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:22:28] "GET / HTTP/1.1" 400 70972
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:22:28] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:28] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /
+[21/Jun/2024 13:22:34] "GET / HTTP/1.1" 400 70835
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:22:35] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:35] "GET /favicon.ico HTTP/1.1" 400 70780
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /api
+[21/Jun/2024 13:22:46] "GET /api HTTP/1.1" 400 70868
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+[21/Jun/2024 13:22:47] "GET /cart.json HTTP/1.1" 400 69996
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:47] "GET /favicon.ico HTTP/1.1" 400 70783
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+Bad Request: /cart.json
+Invalid HTTP_HOST header: 'e605-165-22-180-66.ngrok-free.app'. You may need to add 'e605-165-22-180-66.ngrok-free.app' to ALLOWED_HOSTS.
+[21/Jun/2024 13:22:47] "GET /cart.json HTTP/1.1" 400 69996
+Bad Request: /favicon.ico
+[21/Jun/2024 13:22:47] "GET /favicon.ico HTTP/1.1" 400 70780
+Watching for file changes with StatReloader
+Not Found: /
+[21/Jun/2024 13:25:46] "GET / HTTP/1.1" 404 2312
+Not Found: /favicon.ico
+[21/Jun/2024 13:25:46] "GET /favicon.ico HTTP/1.1" 404 2363
+Not Found: /cart.json
+[21/Jun/2024 13:25:46] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:15] "GET /api/justification/list HTTP/1.1" 200 5702
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 200 89476
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1719
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+[21/Jun/2024 13:26:15] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+[21/Jun/2024 13:26:16] "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+Not Found: /cart.json
+[21/Jun/2024 13:26:16] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:40] "GET /api/justification/list HTTP/1.1" 200 5702
+Not Found: /cart.json
+[21/Jun/2024 13:26:40] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:41] "GET /api/justification/list HTTP/1.1" 200 5702
+Not Found: /cart.json
+[21/Jun/2024 13:26:41] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:41] "GET /api/justification/list HTTP/1.1" 200 5702
+Not Found: /cart.json
+[21/Jun/2024 13:26:42] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:43] "GET /api/justification/list HTTP/1.1" 200 5702
+Not Found: /cart.json
+[21/Jun/2024 13:26:43] "GET /cart.json HTTP/1.1" 404 2357
+[21/Jun/2024 13:26:45] "GET /api/justification/list HTTP/1.1" 200 5702
+Not Found: /cart.json
+[21/Jun/2024 13:26:46] "GET /cart.json HTTP/1.1" 404 2357
