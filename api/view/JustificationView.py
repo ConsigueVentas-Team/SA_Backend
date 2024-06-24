@@ -131,29 +131,38 @@ class JustificationListView(views.APIView):
         return paginated_query.get_paginated_response(serializer.data, stats)
 
 
-class SearchByTypeView(generics.ListAPIView):
+class JustificationSearchView(generics.ListAPIView):
     serializer_class = JustificationSerializer
 
     def get_queryset(self):
-        queryset = Justification.objects.filter(justification_type=self.kwargs['type'])
-        if not queryset:
-            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        """
+        Este método devuelve un queryset que puede ser filtrado por tipo, estado y/o fecha.
+        Los filtros son opcionales y se aplican solo si se proporcionan.
+        """
+        queryset = Justification.objects.all()
+        justification_type = self.request.query_params.get('type', None)
+        justification_status = self.request.query_params.get('status', None)
+        justification_date = self.request.query_params.get('date', None)
+
+        if justification_type:
+            queryset = queryset.filter(justification_type=justification_type)
+        if justification_status:
+            queryset = queryset.filter(justification_status=justification_status)
+        if justification_date:
+            queryset = queryset.filter(justification_date=justification_date)
+
         return queryset
 
-class SearchByStatusView(generics.ListAPIView):
-    serializer_class = JustificationSerializer
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
 
-    def get_queryset(self):
-        queryset = Justification.objects.filter(justification_status=self.kwargs['status'])
-        if not queryset:
+        if not queryset.exists():
             return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-        return queryset
 
-class SearchByDateView(generics.ListAPIView):
-    serializer_class = JustificationSerializer
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
-    def get_queryset(self):
-        queryset = Justification.objects.filter(justification_date=self.kwargs['date'])
-        if not queryset:
-            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-        return queryset
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
