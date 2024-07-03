@@ -132,7 +132,8 @@ class JustificationListView(views.APIView):
 
 
 class JustificationSearchView(generics.ListAPIView):
-    serializer_class = JustificationSerializer
+    serializer_class = JustificationReviewSerializer
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         """
@@ -159,10 +160,18 @@ class JustificationSearchView(generics.ListAPIView):
         if not queryset.exists():
             return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
+        stats = {
+            'rechazados': Justification.objects.filter(justification_status=2).count(),
+            'proceso': Justification.objects.filter(justification_status=3).count(),
+            'aceptados': Justification.objects.filter(justification_status=1).count(),
+            'faltas': Justification.objects.filter(justification_type=0).count(),
+            'delay': Justification.objects.filter(justification_type=1).count(),
+        }
+
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+            return self.get_paginated_response({"data": serializer.data, "stats": stats})
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response({"data": serializer.data, "stats": stats})
