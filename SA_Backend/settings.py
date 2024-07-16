@@ -178,6 +178,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173", #Localhost
     "http://165.22.180.66",
     "http://165.22.180.66:5173",
-    "https://"+config('URI_CLIENT') #deployment
+    "https://"+config('URI_CLIENT'), #deployment
+    "https://"+config('URI_API') #deployment
 ]
 CORS_ALLOW_CREDENTIALS = True
