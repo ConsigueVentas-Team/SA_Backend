@@ -136,14 +136,26 @@ class JustificationSearchView(generics.ListAPIView):
     pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
-        """
-        Este método devuelve un queryset que puede ser filtrado por tipo, estado y/o fecha.
-        Los filtros son opcionales y se aplican solo si se proporcionan.
-        """
         queryset = Justification.objects.all()
-        justification_type = self.request.query_params.get('type', None)
-        justification_status = self.request.query_params.get('status', None)
-        justification_date = self.request.query_params.get('date', None)
+        filters = self.request.query_params
+
+        if 'status' in filters:
+            queryset = queryset.filter(justification_status=filters['status'])
+        if 'user' in filters:
+            queryset = queryset.filter(user_id=filters['user'])
+        if 'exclude_user' in filters:
+            queryset = queryset.exclude(user_id=filters['exclude_user'])
+        if 'shift' in filters:
+            queryset = queryset.filter(user__shift=filters['shift'])
+        if 'id' in filters:
+            justification = queryset.filter(pk=filters['id']).first()
+            return Justification.objects.filter(pk=justification.id) if justification else Justification.objects.none()
+        if 'name' in filters:
+            queryset = queryset.filter(user__name__icontains=filters['name']) | queryset.filter(user__surname__icontains=filters['name'])
+
+        justification_type = filters.get('type', None)
+        justification_status = filters.get('status', None)
+        justification_date = filters.get('date', None)
 
         if justification_type:
             queryset = queryset.filter(justification_type=justification_type)
