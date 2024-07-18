@@ -129,3 +129,61 @@ class JustificationListView(views.APIView):
         serializer = JustificationReviewSerializer(paginated_data, many=True)
 
         return paginated_query.get_paginated_response(serializer.data, stats)
+
+
+class JustificationSearchView(generics.ListAPIView):
+    serializer_class = JustificationReviewSerializer
+    pagination_class = CustomPageNumberPagination
+
+    def get_queryset(self):
+        queryset = Justification.objects.all()
+        filters = self.request.query_params
+
+        if 'status' in filters:
+            queryset = queryset.filter(justification_status=filters['status'])
+        if 'user' in filters:
+            queryset = queryset.filter(user_id=filters['user'])
+        if 'exclude_user' in filters:
+            queryset = queryset.exclude(user_id=filters['exclude_user'])
+        if 'shift' in filters:
+            queryset = queryset.filter(user__shift=filters['shift'])
+        if 'id' in filters:
+            justification = queryset.filter(pk=filters['id']).first()
+            return Justification.objects.filter(pk=justification.id) if justification else Justification.objects.none()
+        if 'name' in filters:
+            queryset = queryset.filter(user__name__icontains=filters['name']) | queryset.filter(user__surname__icontains=filters['name'])
+
+        justification_type = filters.get('type', None)
+        justification_status = filters.get('status', None)
+        justification_date = filters.get('date', None)
+
+        if justification_type:
+            queryset = queryset.filter(justification_type=justification_type)
+        if justification_status:
+            queryset = queryset.filter(justification_status=justification_status)
+        if justification_date:
+            queryset = queryset.filter(justification_date=justification_date)
+
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if not queryset.exists():
+            return Response({"message": "Dato no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+        stats = {
+            'rechazados': Justification.objects.filter(justification_status=2).count(),
+            'proceso': Justification.objects.filter(justification_status=3).count(),
+            'aceptados': Justification.objects.filter(justification_status=1).count(),
+            'faltas': Justification.objects.filter(justification_type=0).count(),
+            'delay': Justification.objects.filter(justification_type=1).count(),
+        }
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response({"data": serializer.data, "stats": stats})
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({"data": serializer.data, "stats": stats})

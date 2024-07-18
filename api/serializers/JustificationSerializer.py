@@ -1,7 +1,10 @@
-from rest_framework import serializers
+from rest_framework import serializers, viewsets
 from api.model.JustificationModel import Justification
 from .UserSerializer import UserSerializer
 from api.serializers.UserSerializer import UserSerializer
+
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class JustificationSerializer(serializers.ModelSerializer):
     justification_status = serializers.ReadOnlyField()
