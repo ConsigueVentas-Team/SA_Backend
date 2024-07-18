@@ -3914,3 +3914,449 @@ Bad Request: /
 Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
 Bad Request: /login
 [17/Jul/2024 21:18:35] "GET /login HTTP/1.1" 400 68191
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+July 17, 2024 - 21:52:59
+Django version 3.2.23, using settings 'SA_Backend.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+[17/Jul/2024 21:57:09] "OPTIONS /api/users/59 HTTP/1.0" 200 0
+[17/Jul/2024 21:57:09] "OPTIONS /api/notification/list HTTP/1.0" 200 0
+[17/Jul/2024 21:57:09] "OPTIONS /api/birthday/nextBirthday?m=7&d=17 HTTP/1.0" 200 0
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[17/Jul/2024 21:57:09] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.NotificationModel.Notification'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+[17/Jul/2024 21:57:09] "GET /api/birthday/nextBirthday?m=7&d=17 HTTP/1.0" 200 2
+[17/Jul/2024 21:57:09] "GET /api/notification/list HTTP/1.0" 200 285
+[17/Jul/2024 21:57:09] "GET /api/users/59 HTTP/1.0" 200 903
+[17/Jul/2024 21:57:22] "OPTIONS /api/login HTTP/1.0" 200 0
+Unauthorized: /api/login
+[17/Jul/2024 21:57:23] "POST /api/login HTTP/1.0" 401 35
+Unauthorized: /api/login
+[17/Jul/2024 21:57:25] "POST /api/login HTTP/1.0" 401 35
+[17/Jul/2024 21:57:37] "POST /api/login HTTP/1.0" 200 1324
+[17/Jul/2024 21:57:37] "GET /api/notification/list HTTP/1.0" 200 285
+[17/Jul/2024 21:57:37] "GET /api/birthday/nextBirthday?m=7&d=17 HTTP/1.0" 200 2
+[17/Jul/2024 21:57:37] "GET /api/users/59 HTTP/1.0" 200 903
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[17/Jul/2024 21:57:37] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+[17/Jul/2024 21:57:47] "OPTIONS /api/attendance/id HTTP/1.0" 200 0
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.AttendanceModel.Attendance'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+[17/Jul/2024 21:57:47] "GET /api/attendance/id HTTP/1.0" 200 5843
+[17/Jul/2024 21:57:48] "OPTIONS /api/departments/list HTTP/1.0" 200 0
+[17/Jul/2024 21:57:48] "OPTIONS /api/attendance/list?page=1&date=2024-7-17 HTTP/1.0" 200 0
+[17/Jul/2024 21:57:48] "OPTIONS /api/cores/list HTTP/1.0" 200 0
+[17/Jul/2024 21:57:48] "OPTIONS /api/attendance/list?page=1&date=2024-7-17 HTTP/1.0" 200 0
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.DepartmentModel.Department'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+[17/Jul/2024 21:57:49] "GET /api/departments/list HTTP/1.0" 200 374
+[17/Jul/2024 21:57:49] "GET /api/attendance/list?page=1&date=2024-7-17 HTTP/1.0" 200 124
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.CoreModel.Core'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+[17/Jul/2024 21:57:49] "GET /api/cores/list HTTP/1.0" 200 1055
+[17/Jul/2024 21:57:49] "GET /api/attendance/list?page=1&date=2024-7-17 HTTP/1.0" 200 124
+[17/Jul/2024 21:57:51] "OPTIONS /api/justification/list?page=1&user=59 HTTP/1.0" 200 0
+Not Found: /api/justification/list
+[17/Jul/2024 21:57:52] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+[17/Jul/2024 21:58:04] "OPTIONS /api/justification/list?page=1&exclude_user=59 HTTP/1.0" 200 0
+Not Found: /api/justification/list
+[17/Jul/2024 21:58:04] "GET /api/justification/list?page=1&exclude_user=59 HTTP/1.0" 404 32
+Not Found: /api/justification/list
+[17/Jul/2024 21:58:07] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 21:59:38] "GET / HTTP/1.0" 400 68873
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 22:05:00] "GET / HTTP/1.0" 400 68884
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[17/Jul/2024 22:07:02] "POST /dns-query HTTP/1.0" 400 16659
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[17/Jul/2024 22:08:39] "GET /dns-query?dns=8WoBAAABAAAAAAAABmdvb2dsZQNjb20AAAEAAQ HTTP/1.0" 400 16775
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /actuator/health
+[17/Jul/2024 22:15:37] "GET /actuator/health HTTP/1.0" 400 68585
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 22:24:28] "GET / HTTP/1.1" 400 67770
+Not Found: /
+[17/Jul/2024 22:30:10] "GET / HTTP/1.0" 404 2316
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /sdk
+[17/Jul/2024 22:30:10] "POST /sdk HTTP/1.0" 400 68275
+Bad Request: /odinhttpcall1721273410
+[17/Jul/2024 22:30:10] "GET /odinhttpcall1721273410 HTTP/1.0" 400 68474
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /evox/about
+[17/Jul/2024 22:30:11] "GET /evox/about HTTP/1.0" 400 68342
+Bad Request: /HNAP1
+[17/Jul/2024 22:30:11] "GET /HNAP1 HTTP/1.0" 400 68287
+Not Found: /
+[17/Jul/2024 22:30:12] "GET / HTTP/1.0" 404 2316
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 22:30:12] "GET / HTTP/1.0" 400 67985
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 22:30:13] "POST / HTTP/1.0" 400 68296
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 22:30:13] "GET / HTTP/1.0" 400 68488
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[17/Jul/2024 22:30:16] "GET /favicon.ico HTTP/1.0" 400 68271
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /login
+[17/Jul/2024 22:56:49] "GET /login HTTP/1.0" 400 68471
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[17/Jul/2024 23:46:30] "GET / HTTP/1.1" 400 68979
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[17/Jul/2024 23:46:31] "GET /favicon.ico HTTP/1.1" 400 69064
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 00:10:42] "GET / HTTP/1.1" 400 67491
+Not Found: /
+[18/Jul/2024 00:44:32] "HEAD / HTTP/1.0" 404 2317
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 01:38:46] "GET /.env HTTP/1.0" 400 68671
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 01:41:01] "GET /.env HTTP/1.0" 400 68702
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 01:41:45] "GET /.env HTTP/1.0" 400 68558
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 02:23:10] "GET / HTTP/1.0" 400 68598
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 02:24:40] "GET /.env HTTP/1.1" 400 67816
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 02:55:07] "GET / HTTP/1.0" 400 68598
+[18/Jul/2024 03:15:40] code 400, message Bad request version ('À\x13À')
+[18/Jul/2024 03:15:40] You're accessing the development server over HTTPS, but it only supports HTTP.
+
+[18/Jul/2024 03:15:40] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03´!ã0uO3\x07÷\x95=äü¯Ç\x9e©"\x7fÎ»Ä\x83ð*?§"5\x00kÍ\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À\'À#À\x13À')
+[18/Jul/2024 03:15:40] You're accessing the development server over HTTPS, but it only supports HTTP.
+
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 03:19:05] "GET /.env HTTP/1.0" 400 68831
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 03:19:05] "POST / HTTP/1.0" 400 69114
+Not Found: /
+[18/Jul/2024 03:22:38] "GET / HTTP/1.0" 404 2316
+Not Found: /
+[18/Jul/2024 03:22:38] "GET / HTTP/1.0" 404 2316
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 03:46:44] "GET / HTTP/1.0" 400 68598
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 03:58:00] "GET / HTTP/1.0" 400 68636
+Not Found: /
+[18/Jul/2024 04:19:19] "GET / HTTP/1.0" 404 2316
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application
+[18/Jul/2024 04:29:04] "GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application HTTP/1.0" 400 69243
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 05:13:33] "GET / HTTP/1.0" 400 68412
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[18/Jul/2024 05:23:32] "GET /favicon.ico HTTP/1.0" 400 68255
+[18/Jul/2024 05:35:11] code 400, message Bad request version ('À\x14À')
+[18/Jul/2024 05:35:11] You're accessing the development server over HTTPS, but it only supports HTTP.
+
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 06:05:59] "GET / HTTP/1.0" 400 68508
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[18/Jul/2024 06:06:01] "GET /favicon.ico HTTP/1.0" 400 68409
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /sitemap.xml
+[18/Jul/2024 06:06:02] "GET /sitemap.xml HTTP/1.0" 400 68409
+Bad Request: /robots.txt
+[18/Jul/2024 06:06:02] "GET /robots.txt HTTP/1.0" 400 68398
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /metadata
+[18/Jul/2024 06:06:35] "GET /metadata HTTP/1.1" 400 16593
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 06:15:44] "GET / HTTP/1.0" 400 68664
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /webui/
+[18/Jul/2024 06:20:07] "GET /webui/ HTTP/1.0" 400 68692
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 06:25:02] "GET / HTTP/1.0" 400 68664
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /geoserver/web/
+[18/Jul/2024 06:28:42] "GET /geoserver/web/ HTTP/1.0" 400 68780
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.git/config
+[18/Jul/2024 06:30:16] "GET /.git/config HTTP/1.0" 400 68867
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 06:59:35] "GET /.env HTTP/1.0" 400 68831
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 06:59:36] "POST / HTTP/1.0" 400 69114
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 07:04:17] "GET / HTTP/1.1" 400 68161
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /.env
+[18/Jul/2024 07:04:52] "GET /.env HTTP/1.1" 400 67819
+Invalid HTTP_HOST header: 'ubuntu-s-1vcpu-512mb-10gb-nyc1-01:8000'. You may need to add 'ubuntu-s-1vcpu-512mb-10gb-nyc1-01' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 07:06:51] "GET / HTTP/1.0" 400 67634
+Invalid HTTP_HOST header: '165.22.180.66:8000'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /metadata
+[18/Jul/2024 07:23:06] "GET /metadata HTTP/1.1" 400 16593
+Not Found: /wp-admin/setup-config.php
+[18/Jul/2024 07:57:35] "GET /wp-admin/setup-config.php?step=1 HTTP/1.0" 404 2416
+Not Found: /wordpress/wp-admin/setup-config.php
+[18/Jul/2024 07:57:36] "GET /wordpress/wp-admin/setup-config.php?step=1 HTTP/1.0" 404 2446
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:14] "GET /dns-query?dns=9k4BAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68896
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:15] "POST /dns-query HTTP/1.0" 400 68275
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:18] "GET /dns-query?name=example.com&type=A HTTP/1.0" 400 16688
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:19] "GET /dns-query?dns=F-cBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68896
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:20] "POST /dns-query HTTP/1.0" 400 68275
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /dns-query
+[18/Jul/2024 08:05:22] "GET /dns-query?name=example.com&type=A HTTP/1.0" 400 16688
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:23] "GET /query?dns=LBUBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68852
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:24] "POST /query HTTP/1.0" 400 68231
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:26] "GET /query?name=example.com&type=A HTTP/1.0" 400 16672
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:27] "GET /query?dns=sOIBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68852
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:28] "POST /query HTTP/1.0" 400 68231
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /query
+[18/Jul/2024 08:05:30] "GET /query?name=example.com&type=A HTTP/1.0" 400 16672
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:30] "GET /resolve?dns=jbEBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68874
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:32] "POST /resolve HTTP/1.0" 400 68253
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:33] "GET /resolve?name=example.com&type=A HTTP/1.0" 400 16680
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:33] "GET /resolve?dns=F8EBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68874
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:34] "POST /resolve HTTP/1.0" 400 68253
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /resolve
+[18/Jul/2024 08:05:35] "GET /resolve?name=example.com&type=A HTTP/1.0" 400 16680
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:35] "GET /?dns=_cQBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68797
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:36] "POST / HTTP/1.0" 400 68176
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:39] "GET /?name=example.com&type=A HTTP/1.0" 400 16652
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:39] "GET /?dns=XqIBAAABAAAAAAAAB2V4YW1wbGUDY29tAAABAAE HTTP/1.0" 400 68797
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:41] "POST / HTTP/1.0" 400 68176
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:05:43] "GET /?name=example.com&type=A HTTP/1.0" 400 16652
+[18/Jul/2024 08:13:41] "OPTIONS /api/notification/list HTTP/1.0" 200 0
+[18/Jul/2024 08:13:41] "OPTIONS /api/users/59 HTTP/1.0" 200 0
+[18/Jul/2024 08:13:41] "OPTIONS /api/birthday/nextBirthday?m=7&d=18 HTTP/1.0" 200 0
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:13:41] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+[18/Jul/2024 08:13:41] "GET /api/notification/list HTTP/1.0" 200 285
+[18/Jul/2024 08:13:41] "GET /api/birthday/nextBirthday?m=7&d=18 HTTP/1.0" 200 2
+[18/Jul/2024 08:13:41] "GET /api/users/59 HTTP/1.0" 200 903
+[18/Jul/2024 08:13:46] "OPTIONS /api/departments/list?page=1 HTTP/1.0" 200 0
+[18/Jul/2024 08:13:46] "GET /api/departments/list?page=1 HTTP/1.0" 200 374
+[18/Jul/2024 08:13:49] "OPTIONS /api/departments/list HTTP/1.0" 200 0
+[18/Jul/2024 08:13:49] "OPTIONS /api/cores/list HTTP/1.0" 200 0
+[18/Jul/2024 08:13:49] "OPTIONS /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 0
+[18/Jul/2024 08:13:49] "OPTIONS /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 0
+[18/Jul/2024 08:13:49] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:13:49] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:13:49] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+[18/Jul/2024 08:13:49] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+[18/Jul/2024 08:13:50] "OPTIONS /api/attendance/id HTTP/1.0" 200 0
+[18/Jul/2024 08:13:50] "GET /api/attendance/id HTTP/1.0" 200 5843
+[18/Jul/2024 08:13:52] "OPTIONS /api/justification/list?page=1&user=59 HTTP/1.0" 200 0
+Not Found: /api/justification/list
+[18/Jul/2024 08:13:52] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+[18/Jul/2024 08:14:51] "OPTIONS /api/justification/create HTTP/1.0" 200 0
+[18/Jul/2024 08:15:18] "OPTIONS /api/notification/list?page=1 HTTP/1.0" 200 0
+[18/Jul/2024 08:15:18] "GET /api/notification/list?page=1 HTTP/1.0" 200 285
+[18/Jul/2024 08:15:27] "POST /api/notification/list HTTP/1.0" 201 138
+[18/Jul/2024 08:15:27] "GET /api/notification/list?page=1 HTTP/1.0" 200 424
+[18/Jul/2024 08:15:33] "OPTIONS /api/notification/delete/4 HTTP/1.0" 200 0
+[18/Jul/2024 08:15:33] "DELETE /api/notification/delete/4 HTTP/1.0" 204 0
+[18/Jul/2024 08:15:33] "GET /api/notification/list?page=1 HTTP/1.0" 200 285
+[18/Jul/2024 08:18:41] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:18:41] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+[18/Jul/2024 08:18:41] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:18:41] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+[18/Jul/2024 08:18:45] "OPTIONS /api/justification/list?page=1&exclude_user=59 HTTP/1.0" 200 0
+Not Found: /api/justification/list
+[18/Jul/2024 08:18:45] "GET /api/justification/list?page=1&exclude_user=59 HTTP/1.0" 404 32
+Not Found: /api/justification/list
+[18/Jul/2024 08:18:46] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+[18/Jul/2024 08:18:49] "OPTIONS /api/users/list?page=1 HTTP/1.0" 200 0
+[18/Jul/2024 08:18:49] "OPTIONS /api/position/list HTTP/1.0" 200 0
+[18/Jul/2024 08:18:49] "GET /api/departments/list HTTP/1.0" 200 374
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.UserModel.User'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+/root/sistema_asistencia/SA_Backend/env/lib/python3.10/site-packages/rest_framework/pagination.py:200: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'api.model.PositionModel.Position'> QuerySet.
+  paginator = self.django_paginator_class(queryset, page_size)
+[18/Jul/2024 08:18:49] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:18:49] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:18:49] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:18:52] "OPTIONS /api/users/15 HTTP/1.0" 200 0
+[18/Jul/2024 08:18:52] "GET /api/users/15 HTTP/1.0" 200 894
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:18:52] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+[18/Jul/2024 08:19:14] "GET /api/departments/list?page=1 HTTP/1.0" 200 374
+[18/Jul/2024 08:20:01] "OPTIONS /api/departments/statistics HTTP/1.0" 200 0
+[18/Jul/2024 08:20:01] "OPTIONS /api/cores/statistics HTTP/1.0" 200 0
+[18/Jul/2024 08:20:01] "OPTIONS /api/reports/list?page=0 HTTP/1.0" 200 0
+[18/Jul/2024 08:20:01] "GET /api/departments/list?page=1 HTTP/1.0" 200 374
+[18/Jul/2024 08:20:01] "OPTIONS /api/cores/list?page=1 HTTP/1.0" 200 0
+[18/Jul/2024 08:20:01] "GET /api/cores/statistics HTTP/1.0" 200 1796
+[18/Jul/2024 08:20:01] "GET /api/departments/statistics HTTP/1.0" 200 693
+[18/Jul/2024 08:20:01] "GET /api/reports/list?page=0 HTTP/1.0" 200 455
+[18/Jul/2024 08:20:01] "GET /api/cores/list?page=1 HTTP/1.0" 200 1055
+[18/Jul/2024 08:20:01] "OPTIONS /api/cores/list?page=2 HTTP/1.0" 200 0
+[18/Jul/2024 08:20:01] "GET /api/cores/list?page=2 HTTP/1.0" 200 809
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:32:54] "GET / HTTP/1.0" 400 68942
+[18/Jul/2024 08:46:05] "GET /api/departments/statistics HTTP/1.0" 200 693
+[18/Jul/2024 08:46:05] "GET /api/notification/list HTTP/1.0" 200 285
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:46:05] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+[18/Jul/2024 08:46:05] "GET /api/cores/statistics HTTP/1.0" 200 1796
+[18/Jul/2024 08:46:05] "GET /api/departments/list?page=1 HTTP/1.0" 200 374
+[18/Jul/2024 08:46:05] "GET /api/reports/list?page=0 HTTP/1.0" 200 455
+[18/Jul/2024 08:46:05] "GET /api/cores/list?page=1 HTTP/1.0" 200 1055
+[18/Jul/2024 08:46:05] "GET /api/cores/list?page=2 HTTP/1.0" 200 809
+[18/Jul/2024 08:47:24] "GET /api/users/59 HTTP/1.0" 200 903
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:47:25] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+Not Found: /api/justification/list
+[18/Jul/2024 08:47:34] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+[18/Jul/2024 08:47:35] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:47:35] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:47:35] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:47:35] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:47:39] "GET /api/users/59 HTTP/1.0" 200 903
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:47:39] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+[18/Jul/2024 08:48:39] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:48:39] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:48:39] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:48:39] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:48:40] "GET /api/users/15 HTTP/1.0" 200 894
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:48:41] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+[18/Jul/2024 08:48:42] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:48:42] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:48:43] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:48:43] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:48:43] "OPTIONS /api/users/12 HTTP/1.0" 200 0
+[18/Jul/2024 08:48:43] "GET /api/users/12 HTTP/1.0" 200 889
+Not Found: /media/C:wamp64tmpphp9A58.tmp
+[18/Jul/2024 08:48:44] "GET /media/C%3Awamp64tmpphp9A58.tmp HTTP/1.0" 404 2627
+[18/Jul/2024 08:48:45] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:48:45] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:48:45] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:48:45] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:48:46] "OPTIONS /api/users/130 HTTP/1.0" 200 0
+[18/Jul/2024 08:48:46] "GET /api/users/130 HTTP/1.0" 200 882
+Not Found: /media/jair.png
+[18/Jul/2024 08:48:46] "GET /media/jair.png HTTP/1.0" 404 2571
+[18/Jul/2024 08:48:47] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:48:47] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:48:47] "GET /api/position/list HTTP/1.0" 200 1464
+[18/Jul/2024 08:48:47] "GET /api/users/list?page=1 HTTP/1.0" 200 8348
+[18/Jul/2024 08:48:50] "GET /api/users/15 HTTP/1.0" 200 894
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:48:50] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+[18/Jul/2024 08:49:08] "GET /api/notification/list HTTP/1.0" 200 285
+[18/Jul/2024 08:49:08] "GET /api/users/15 HTTP/1.0" 200 894
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:49:08] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:49:08] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:50:19] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+Not Found: /media/C:wamp64tmpphp12E5.tmp
+[18/Jul/2024 08:50:20] "GET /media/C%3Awamp64tmpphp12E5.tmp HTTP/1.0" 404 2627
+Not Found: /favicon.ico
+[18/Jul/2024 08:50:20] "GET /favicon.ico HTTP/1.0" 404 2367
+[18/Jul/2024 08:50:36] "GET /api/users/59 HTTP/1.0" 200 903
+Not Found: /media/WhatsApp Image 2023-09-19 at 20.46.32.jpeg
+[18/Jul/2024 08:50:36] "GET /media/WhatsApp%20Image%202023-09-19%20at%2020.46.32.jpeg HTTP/1.0" 404 2715
+Invalid HTTP_HOST header: '165.22.180.66'. You may need to add '165.22.180.66' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Jul/2024 08:56:56] "GET / HTTP/1.0" 400 68578
+[18/Jul/2024 08:57:20] "GET /api/attendance/id HTTP/1.0" 200 5843
+[18/Jul/2024 08:57:21] "GET /api/departments/list HTTP/1.0" 200 374
+[18/Jul/2024 08:57:21] "GET /api/cores/list HTTP/1.0" 200 1055
+[18/Jul/2024 08:57:21] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+[18/Jul/2024 08:57:21] "GET /api/attendance/list?page=1&date=2024-7-18 HTTP/1.0" 200 124
+Not Found: /api/justification/list
+[18/Jul/2024 08:57:23] "GET /api/justification/list?page=1&exclude_user=59 HTTP/1.0" 404 32
+Not Found: /api/justification/list
+[18/Jul/2024 08:57:24] "GET /api/justification/list?page=1&user=59 HTTP/1.0" 404 32
+[18/Jul/2024 08:58:47] code 400, message Bad HTTP/0.9 request type ('\x04\x01\x00\x194e')
+[18/Jul/2024 08:58:47] " 4e " 400 -
+[18/Jul/2024 08:59:47] code 400, message Bad request syntax ('\x05\x01\x00')
+[18/Jul/2024 08:59:47] " " 400 -
+Invalid HTTP_HOST header: 'hotmail-com.olc.protection.outlook.com:25'. You may need to add 'hotmail-com.olc.protection.outlook.com' to ALLOWED_HOSTS.
+Bad Request: /hotmail-com.olc.protection.outlook.com:25
+[18/Jul/2024 08:59:47] "CONNECT hotmail-com.olc.protection.outlook.com:25 HTTP/1.1" 400 68316
