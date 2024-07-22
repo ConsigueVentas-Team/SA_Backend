@@ -34,14 +34,14 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Settings for X-Frame-Options
-X_FRAME_OPTIONS = 'ALLOW-FROM http://127.0.0.1:8000'
+X_FRAME_OPTIONS = 'ALLOW-FROM https://consigueventas.netlify.app'
 
 # Settings for Content Security Policy (CSP)
 CSP_DEFAULT_SRC = ["'self'"]
 CSP_SCRIPT_SRC = ["'self'"]
 CSP_STYLE_SRC = ["'self'"]
 CSP_IMG_SRC = ["'self'", "data:"]
-CSP_FRAME_ANCESTORS = ["'self'", "*"]
+CSP_FRAME_ANCESTORS = ["'self'", "https://consigueventas.netlify.app"]
 
 # Application definition
 INSTALLED_APPS = [
