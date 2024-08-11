@@ -75,7 +75,8 @@ class UserLoginView(generics.CreateAPIView):
                 'access_token': str(access_token),
                 'user': serializer.data,
                 'role': getRol(user.role)
-            }, status=status.HTTP_200_OK)        
+            }, status=status.HTTP_200_OK)                        
+
         else:
             return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
         
@@ -130,6 +131,7 @@ class UserListView(generics.ListAPIView):
         position = self.request.query_params.get('position', None)
         shift = self.request.query_params.get('shift', None)
         name = self.request.query_params.get('name', None)
+        is_active = self.request.query_params.get('is_active', None)        
 
         if name:
             queryset = queryset.filter(Q(name__icontains=name) | Q(surname__icontains=name))
@@ -141,6 +143,8 @@ class UserListView(generics.ListAPIView):
             queryset = queryset.filter(position=position)
         if shift:
             queryset = queryset.filter(shift=shift)
+        if is_active: 
+            queryset = queryset.filter(is_active=is_active)
         return queryset
         
 class UserDetailsView(generics.ListAPIView):
